@@ -1,6 +1,7 @@
 ﻿using Ninject;
 using NUnit.Framework;
 using Nx.Bootstrappers;
+using Nx.Kernel;
 using Nx.Logging;
 
 namespace Nx.Core.Tests
@@ -10,22 +11,23 @@ namespace Nx.Core.Tests
         [Test]
         public void TheSequenceShouldCompleteWithoutThrowing()
         {
-            using (BootstrapperBase bootstrapper = new Bootstrapper())
-            using (IKernel kernel = bootstrapper.Run())
+            Assert.DoesNotThrow(() =>
             {
-            }
+                using (BootstrapperBase bootstrapper = new Bootstrapper())
+                using (IKernel kernel = bootstrapper.Run())
+                {
+                }
+            });
         }
 
         [Test]
-        public void TheLogFactoryShouldCreateLoggers()
+        public void TheILoggerTypeShouldBeRegistered()
         {
             using (BootstrapperBase bootstrapper = new Bootstrapper())
             using (IKernel kernel = bootstrapper.Run())
-            using (ILogger logger = kernel.Get<ILogFactory>().CreateLogger("TestLogger"))
             {
-                Assert.IsNotNull(logger);
-                logger.Debug("hello!");
-            }
+                Assert.IsTrue(kernel.IsRegistered<ILogger>());
+            }            
         }
     }
 }
