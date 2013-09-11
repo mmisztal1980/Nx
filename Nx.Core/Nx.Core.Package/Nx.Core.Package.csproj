@@ -96,7 +96,7 @@ copy "$(ProjectDir)..\Nx.Core\bin\$(ConfigurationName)\Nx.Core.*" "$(ProjectDir)
 copy "$(ProjectDir)..\Nx.Core\bin\$(ConfigurationName)\Nx.Core.*" "$(ProjectDir)lib\portable-win+net45+sl40+wp71" /y /v
 copy "$(ProjectDir)..\Nx.Core\bin\$(ConfigurationName)\Nx.Core.*" "$(ProjectDir)lib\netcore45" /y /v
 copy "$(ProjectDir)..\Nx.Core\bin\$(ConfigurationName)\Nx.Core.*" "$(ProjectDir)lib\sl4-windowsphone71" /y /v
-nuget.exe SetApiKey 1a3ede72-1a8a-42c2-b61c-0ed1b71324ea
+$(ProjectDir)NuGet.exe SetApiKey 1a3ede72-1a8a-42c2-b61c-0ed1b71324ea
 copy "$(ProjectDir)..\Nx.Core\bin\$(ConfigurationName)\Nx.Core.*" "$(ProjectDir)lib\windowsphone8" /y /v
 copy "$(ProjectDir)..\Nx.Core\bin\$(ConfigurationName)\Nx.Core.*" "$(ProjectDir)lib\net40" /y /v
 copy "$(ProjectDir)..\Nx.Core\bin\$(ConfigurationName)\Nx.Core.*" "$(ProjectDir)lib\net40" /y /v</PreBuildEvent>
