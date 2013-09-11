@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Nx.Core</id>
-    <version>1.0.0.0</version>
+    <version>0.0.0.1</version>
     <title>Nx.Core.Package</title>
     <authors>Maciek Misztal</authors>
     <owners>ICode</owners>
