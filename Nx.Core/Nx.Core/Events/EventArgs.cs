@@ -4,15 +4,15 @@ namespace Nx.Events
 {
     public class EventArgs<T> : EventArgs
     {
-        private readonly T value;
+        private readonly T _value;
         public T Value
         {
-            get { return this.value; }
+            get { return _value; }
         }
 
         public EventArgs(T value)
         {
-            this.value = value;
+            _value = value;
         }
     }
 }
