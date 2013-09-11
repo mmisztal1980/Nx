@@ -1,29 +1,27 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Nx.Core.Package</id>
-    <version>1.0.0</version>
+    <id>Nx.Core</id>
+    <version>1.0.0.0</version>
     <title>Nx.Core.Package</title>
-    <authors>misztalm</authors>
-    <owners>Hewlett-Packard Company</owners>
+    <authors>Maciek Misztal</authors>
+    <owners>ICode</owners>
     <description>
-      A long description of the package. This shows up in the right pane of the Add Package Dialog as well as in the Package Manager Console when listing packages using the Get-Package command.
+      Core Nx Library for cross-platform application developement
     </description>
     <releaseNotes>
+      Moved to GitHub
     </releaseNotes>
-    <summary>
-      A short description of the package. If specified, this shows up in the middle pane of the Add Package Dialog. If not specified, a truncated version of the description is used instead.
+    <summary>      
     </summary>
     <language>en-US</language>
-    <projectUrl>https://nuget.org/packages/Nx.Core.Package</projectUrl>
-    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <projectUrl>http://nx.codeplex.com</projectUrl>
+    <iconUrl>http://i214.photobucket.com/albums/cc45/razziel1980/mm-codeplex_zpsef9619e6.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
-    <copyright>Copyright Hewlett-Packard Company 2013</copyright>
+    <copyright>Copyright ICode 2013</copyright>
     <dependencies>
-        <group targetFramework="net40">
-          <dependency id="log4net" version="1.2.10" />
-        </group>
+      <dependency id="Portable.CommonServiceLocator.NinjectAdapter"/>
     </dependencies>
     <references></references>
     <tags>Hewlett-Packard Company</tags>
@@ -31,6 +29,6 @@
   <files>
     <file src="lib\" target="lib" />
     <file src="tools\" target="tools" />
-    <file src="content\" target="content" />
+    <!--<file src="content\" target="content" />-->
   </files>
 </package>
