@@ -18,6 +18,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Core.Tests", "Nx.Core.Tests\Nx.Core.Tests.csproj", "{5A0F33E9-4915-4FE0-9BCE-80F873C47FEF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Core.Package", "Nx.Core.Package\Nx.Core.Package.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9CCCD560-55EE-4969-A90B-8C82352E118E} = {9CCCD560-55EE-4969-A90B-8C82352E118E}
+		{5A0F33E9-4915-4FE0-9BCE-80F873C47FEF} = {5A0F33E9-4915-4FE0-9BCE-80F873C47FEF}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
