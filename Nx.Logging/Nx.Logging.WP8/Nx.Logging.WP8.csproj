@@ -110,7 +110,7 @@
       <HintPath>..\packages\NLog.2.0.0.2000\lib\sl3-wp\NLog.dll</HintPath>
     </Reference>
     <Reference Include="Nx.Core">
-      <HintPath>..\packages\Nx.Core.0.1.5.0\lib\windowsphone8\Nx.Core.dll</HintPath>
+      <HintPath>..\packages\Nx.Core.0.2.2\lib\windowsphone8\Nx.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

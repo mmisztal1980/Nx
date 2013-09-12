@@ -130,7 +130,7 @@
       <HintPath>..\packages\Portable.Ninject.3.0.6\lib\netcore45\Ninject.WinRT.dll</HintPath>
     </Reference>
     <Reference Include="Nx.Core">
-      <HintPath>..\packages\Nx.Core.0.1.5.0\lib\netcore45\Nx.Core.dll</HintPath>
+      <HintPath>..\packages\Nx.Core.0.2.2\lib\netcore45\Nx.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
