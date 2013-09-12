@@ -48,7 +48,6 @@
     <Compile Include="Bootstrappers\IBootstrapperExtension.cs" />
     <Compile Include="Bootstrappers\IModuleLoadingStrategy.cs" />
     <Compile Include="Condition.cs" />
-    <Compile Include="Events\EventArgs.cs" />
     <Compile Include="Extensions\NxServiceLocatorExtension.cs" />
     <Compile Include="Kernel\IKernel.Extensions.cs" />
     <Compile Include="Logging\ILogFactory.cs" />
