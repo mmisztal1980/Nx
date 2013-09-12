@@ -12,9 +12,9 @@ namespace Nx.Bootstrappers
     /// </summary>
     public abstract class BootstrapperBase : IHaveKernel, IBootstrapper, IDisposable
     {
-        protected readonly INinjectSettings kernelSettings = null;
+        protected readonly INinjectSettings KernelSettings = null;
         protected readonly IModuleLoadingStrategy ModuleLoadingStrategy = null;
-        protected bool useDefaultConfiguration = true;
+        protected bool UseDefaultConfiguration = true;
         protected const string LoggerName = "SYSTEM";
 
         public IKernel Kernel { get; protected set; }
@@ -23,17 +23,20 @@ namespace Nx.Bootstrappers
         {
             ModuleLoadingStrategy = new HardcodedLoadingStrategy(modules);
 
-            this.Kernel = this.CreateContainer();
-            this.PreConfigureContainer();
-            this.Kernel.Bind<ILogFactory>().To<LogFactory>().InSingletonScope();
+            Kernel = CreateContainer();
+            PreConfigureContainer();
+            Kernel
+                .Bind<ILogFactory>()
+                .To<LogFactory>()
+                .InSingletonScope();
 
-            this.ConfigureLogging();
+            ConfigureLogging();
         }
 
         public BootstrapperBase(INinjectSettings settings, params INinjectModule[] modules)
             : this(modules)
         {
-            kernelSettings = settings;
+            KernelSettings = settings;
         }
 
         #region IDisposable Members
