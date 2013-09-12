@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WhenUsingBootstrapperExtensions.cs" />
     <Compile Include="WhenUsingConditions.cs" />
     <Compile Include="WhenUsingTheBootstrapper.cs" />
     <Compile Include="WhenUsingTheLogFactory.cs" />
