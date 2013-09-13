@@ -34,7 +34,7 @@ namespace Nx.Web.Tests
         public void SignalRDependencyResolverShouldBeRegistered()
         {
             using (var bootstrapper = new Bootstrapper()
-    .ExtendBy<NxWebExtension>())
+                .ExtendBy<NxWebExtension>())
             using (var kernel = bootstrapper.Run())
             {
                 Assert.IsTrue(kernel.IsRegistered<Microsoft.AspNet.SignalR.IDependencyResolver>());
@@ -45,7 +45,7 @@ namespace Nx.Web.Tests
         public void AllResolversShouldPointToUniversalDependencyResolverInstance()
         {
             using (var bootstrapper = new Bootstrapper()
-    .ExtendBy<NxWebExtension>())
+                    .ExtendBy<NxWebExtension>())
             using (var kernel = bootstrapper.Run())
             {
                 var @mvc = kernel.Get<System.Web.Mvc.IDependencyResolver>();
