@@ -15,19 +15,19 @@
     <tags></tags>
     <dependencies>
       <group targetFramework="net40">
-        <dependency id="Nx.Core" version="0.2.6"/>
+        <dependency id="Nx.Core" version="0.2.8"/>
         <dependency id="NLog"/>
       </group>
       <group targetFramework="netcore45">
-        <dependency id="Nx.Core" version="0.2.6"/>
+        <dependency id="Nx.Core" version="0.2.8"/>
         <dependency id="Metrolog"/>
       </group>
       <group targetFramework="sl4-windowsphone71">
-        <dependency id="Nx.Core" version="0.2.6"/>
+        <dependency id="Nx.Core" version="0.2.8"/>
         <dependency id="NLog"/>
       </group>
       <group targetFramework="windowsphone8">
-        <dependency id="Nx.Core" version="0.2.6"/>
+        <dependency id="Nx.Core" version="0.2.8"/>
         <dependency id="NLog"/>
       </group>
     </dependencies>
