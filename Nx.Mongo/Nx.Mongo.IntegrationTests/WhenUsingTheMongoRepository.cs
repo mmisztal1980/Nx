@@ -13,7 +13,7 @@ namespace Nx.Mongo.IntegrationTests
     [TestFixture]
     public class WhenUsingTheMongoRepository : TestFixture
     {
-        private const int TimeOut = 15000;
+        private const int TimeOut = 30000;
         private const string ConnectionStringName = "testdatabase";
         private const string DatabaseName = "nx_mongo_testdatabase";
 
