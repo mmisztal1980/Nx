@@ -94,12 +94,12 @@ namespace Nx.EF.Migrations
             }
         }
 
-        public bool Migrate<TContext, TConfiguration>(DomainConfigurationSection config)
-            where TContext : DbContext
-            where TConfiguration : DbMigrationsConfiguration<TContext>, new()
-        {
-            return Migrate<TContext, TConfiguration>(config.SqlServerConnectionStringName);
-        }
+        //public bool Migrate<TContext, TConfiguration>(DomainConfigurationSection config)
+        //    where TContext : DbContext
+        //    where TConfiguration : DbMigrationsConfiguration<TContext>, new()
+        //{
+        //    return Migrate<TContext, TConfiguration>(config.SqlServerConnectionStringName);
+        //}
 
         public bool Drop<TContext>() where TContext : DbContext
         {
@@ -131,10 +131,10 @@ namespace Nx.EF.Migrations
             }
         }
 
-        public bool Drop<TContext>(DomainConfigurationSection config)
-            where TContext : DbContext
-        {
-            return Drop<TContext>(config.SqlServerConnectionStringName);
-        }
+        //public bool Drop<TContext>(DomainConfigurationSection config)
+        //    where TContext : DbContext
+        //{
+        //    return Drop<TContext>(config.SqlServerConnectionStringName);
+        //}
     }
 }
