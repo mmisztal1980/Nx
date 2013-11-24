@@ -14,6 +14,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3FE830
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.EF.IntegrationTests", "Nx.EF.IntegrationTests\Nx.EF.IntegrationTests.csproj", "{CD007B54-875B-4FFF-9E66-4EA2EC2FAADE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.EF.Package", "Nx.EF.Package\Nx.EF.Package.csproj", "{B147FF32-CEF6-469E-9361-2D0A8E0947BC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CD007B54-875B-4FFF-9E66-4EA2EC2FAADE} = {CD007B54-875B-4FFF-9E66-4EA2EC2FAADE}
+		{BDF8C9C9-7E10-48F9-8BB4-E5A6AE3A1616} = {BDF8C9C9-7E10-48F9-8BB4-E5A6AE3A1616}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +34,10 @@ Global
 		{CD007B54-875B-4FFF-9E66-4EA2EC2FAADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD007B54-875B-4FFF-9E66-4EA2EC2FAADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD007B54-875B-4FFF-9E66-4EA2EC2FAADE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B147FF32-CEF6-469E-9361-2D0A8E0947BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B147FF32-CEF6-469E-9361-2D0A8E0947BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B147FF32-CEF6-469E-9361-2D0A8E0947BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B147FF32-CEF6-469E-9361-2D0A8E0947BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
