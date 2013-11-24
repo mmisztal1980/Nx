@@ -85,7 +85,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="ITestEntityRepository.cs" />
     <Compile Include="Migrations\201311241350583_InitialCreate.cs" />
-    <Compile Include="Migrations\201311241350583_InitialCreate.Designer.cs">
+    <Compile Include="Migrations\201311241350583_InitialCreate.designer.cs">
       <DependentUpon>201311241350583_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />

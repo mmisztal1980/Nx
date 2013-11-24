@@ -33,32 +33,32 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator.NinjectAdapter">
-      <HintPath>packages\Portable.CommonServiceLocator.NinjectAdapter.1.2.3\lib\portable-net4+sl4+wp71+win8\CommonServiceLocator.NinjectAdapter.dll</HintPath>
+      <HintPath>..\packages\Portable.CommonServiceLocator.NinjectAdapter.1.2.3\lib\portable-net4+sl4+wp71+win8\CommonServiceLocator.NinjectAdapter.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework">
-      <HintPath>packages\EntityFramework.6.0.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
-      <HintPath>packages\EntityFramework.6.0.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Portable.CommonServiceLocator.1.2.2\lib\net35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\packages\Portable.CommonServiceLocator.1.2.2\lib\net35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Ninject.Common">
-      <HintPath>packages\Portable.Ninject.3.0.7\lib\net40-client\Ninject.Common.dll</HintPath>
+      <HintPath>..\packages\Portable.Ninject.3.0.7\lib\net40-client\Ninject.Common.dll</HintPath>
     </Reference>
     <Reference Include="Ninject.NetFx">
-      <HintPath>packages\Portable.Ninject.3.0.7\lib\net40-client\Ninject.NetFx.dll</HintPath>
+      <HintPath>..\packages\Portable.Ninject.3.0.7\lib\net40-client\Ninject.NetFx.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
-      <HintPath>packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="Nx.Core">
-      <HintPath>packages\Nx.Core.0.2.11\lib\net40\Nx.Core.dll</HintPath>
+      <HintPath>..\packages\Nx.Core.0.2.11\lib\net40\Nx.Core.dll</HintPath>
     </Reference>
     <Reference Include="Nx.Logging.Net40">
-      <HintPath>packages\Nx.Logging.0.2.11\lib\net40\Nx.Logging.Net40.dll</HintPath>
+      <HintPath>..\packages\Nx.Logging.0.2.11\lib\net40\Nx.Logging.Net40.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
