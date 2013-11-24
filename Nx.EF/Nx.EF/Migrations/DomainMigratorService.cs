@@ -76,7 +76,9 @@ namespace Nx.EF.Migrations
                         ? new MigrateDatabaseToLatestVersion<TContext, TConfiguration>(connectionStringName)
                         : new MigrateDatabaseToLatestVersion<TContext, TConfiguration>());
 
+                        context.Database.Initialize(false);
                         context.Database.CreateIfNotExists();
+
                         return true;
                     }
                     else
