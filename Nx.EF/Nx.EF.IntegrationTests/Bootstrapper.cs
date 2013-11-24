@@ -1,5 +1,6 @@
 ﻿using Ninject;
 using Nx.Bootstrappers;
+using Nx.EF.Migrations;
 using Nx.Kernel;
 using System.Configuration;
 
@@ -10,6 +11,8 @@ namespace Nx.EF.IntegrationTests
         protected override void ConfigureContainer()
         {
             Kernel.RegisterTypeIfMissing<ITestEntityRepository, TestEntityRepository>(false);
+            Kernel.RegisterTypeIfMissing<IContextFactory, ContextFactory>(false);
+            Kernel.RegisterTypeIfMissing<IDomainMigratorService, DomainMigratorService>(false);
         }
 
         protected override Ninject.IKernel CreateContainer()
