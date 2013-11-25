@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 namespace Nx.EF.IntegrationTests
 {
     [TestFixture]
+    [Ignore]
     public class WhenUsingTheDomainMigrator : TestFixture
     {
         private const string ConnectionStringName = "testMigrationsDatabase";
