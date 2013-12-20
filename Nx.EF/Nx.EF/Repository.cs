@@ -82,6 +82,34 @@ namespace Nx.EF
             }
         }
 
+        public int Count()
+        {
+            int result = 0;
+
+            Execute((ctx) =>
+            {
+                result = SourceSelector(ctx).Count();
+
+                Logger.Debug("Count of {0} entities retrieved", result);
+            });
+
+            return result;
+        }
+
+        public int Count(Expression<Func<TEntity, bool>> predicate)
+        {
+            int result = 0;
+
+            Execute((ctx) =>
+            {
+                result = SourceSelector(ctx).Count(predicate);
+
+                Logger.Debug("Count of {0} entities retrieved using a predicate", result);
+            });
+
+            return result;
+        }
+
         private void Execute(Action<TContext> action)
         {
             try

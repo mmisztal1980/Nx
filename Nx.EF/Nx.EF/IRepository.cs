@@ -12,6 +12,10 @@ namespace Nx.EF
 
         void Initialize(string connectionStringName);
 
+        int Count();
+
+        int Count(Expression<Func<TEntity, bool>> predicate);
+
         TId Save(TEntity entity);
 
         int Save(IEnumerable<TEntity> entities, out IEnumerable<TId> ids);
