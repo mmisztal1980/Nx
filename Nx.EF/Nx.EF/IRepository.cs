@@ -34,7 +34,13 @@ namespace Nx.EF
 
         int Get(Expression<Func<TEntity, bool>> predicate, out IEnumerable<TEntity> result);
 
+        int Get<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy,
+            bool descending, out IEnumerable<TEntity> result);
+
         int Get(Expression<Func<TEntity, bool>> predicate, int skip, int take, out IEnumerable<TEntity> result);
+
+        int Get<TKey>(Expression<Func<TEntity, bool>> predicate, int skip, int take,
+            Expression<Func<TEntity, TKey>> orderBy, bool descending, out IEnumerable<TEntity> result);
 
         int Get(IEnumerable<TId> ids, out IEnumerable<TEntity> result);
     }

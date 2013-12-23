@@ -307,6 +307,25 @@ namespace Nx.EF
             return count;
         }
 
+        public int Get<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy, bool descending, out IEnumerable<TEntity> result)
+        {
+            int count = 0;
+            IEnumerable<TEntity> entities = null;
+
+            Execute((ctx) =>
+            {
+                entities = descending ?
+                    SourceSelector(ctx).Where(predicate).OrderByDescending(orderBy).ToArray() :
+                    SourceSelector(ctx).Where(predicate).OrderBy(orderBy).ToArray();
+                count = entities.Count();
+
+                Logger.Debug("{0} Entities retrieved", count);
+            });
+
+            result = entities;
+            return count;
+        }
+
         public int Get(Expression<Func<TEntity, bool>> predicate, int skip, int take, out IEnumerable<TEntity> result)
         {
             int count = 0;
@@ -315,6 +334,26 @@ namespace Nx.EF
             Execute((ctx) =>
             {
                 entities = SourceSelector(ctx).Where(predicate).OrderBy(e => e.Id).Skip(skip).Take(take).ToArray();
+                count = entities.Count();
+
+                Logger.Debug("{0} Entities retrieved", count);
+            });
+
+            result = entities;
+
+            return count;
+        }
+
+        public int Get<TKey>(Expression<Func<TEntity, bool>> predicate, int skip, int take, Expression<Func<TEntity, TKey>> orderBy, bool descending, out IEnumerable<TEntity> result)
+        {
+            int count = 0;
+            IEnumerable<TEntity> entities = null;
+
+            Execute((ctx) =>
+            {
+                entities = descending ?
+                    SourceSelector(ctx).Where(predicate).OrderByDescending(orderBy).Skip(skip).Take(take).ToArray() :
+                    SourceSelector(ctx).Where(predicate).OrderBy(orderBy).Skip(skip).Take(take).ToArray();
                 count = entities.Count();
 
                 Logger.Debug("{0} Entities retrieved", count);
