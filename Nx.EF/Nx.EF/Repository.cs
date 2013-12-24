@@ -110,7 +110,7 @@ namespace Nx.EF
             return result;
         }
 
-        private void Execute(Action<TContext> action)
+        protected void Execute(Action<TContext> action)
         {
             try
             {
