@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Nx.Cloud.Concurrency
 {
-    public class CloudLockBlobRepository : BlobRepository<CloudLockBlobData>
+    internal class CloudLockBlobRepository : BlobRepository<CloudLockBlobData>
     {
         public CloudLockBlobRepository(ICloudConfiguration config)
             : base(config, "cloudlocks")

@@ -11,27 +11,35 @@ namespace Nx.Cloud.Blobs
     public abstract class BlobRepository<T> : IBlobRepository<T>
         where T : class, IBlobData
     {
-        private string ContainerName;
-        private CloudBlobContainer Container;
-        private ILogger Logger;
+        private readonly string _containerName;
+        private readonly CloudBlobContainer _container;
+        private readonly ILogger _logger;
 
-        public BlobRepository(ICloudConfiguration config, string containerName)
+        protected BlobRepository(ICloudConfiguration config, string containerName)
             : this(config, containerName, BlobContainerPublicAccessType.Off)
         {
         }
 
-        public BlobRepository(ICloudConfiguration config, string containerName, BlobContainerPublicAccessType permission)
+        protected BlobRepository(ICloudConfiguration config, string containerName, BlobContainerPublicAccessType permission)
         {
-            Logger = LogFactory.Instance.CreateLogger("BlobRepository");
-            ContainerName = containerName;
-            Container = GetContainer(config, ContainerName, permission);
+            _logger = LogFactory.Instance.CreateLogger("BlobRepository");
+            _containerName = containerName;
+            _container = GetContainer(config, _containerName, permission);
         }
 
         public int Count
         {
             get
             {
-                return Container.ListBlobs().Count();
+                return _container.ListBlobs().Count();
+            }
+        }
+
+        public string ContainerName
+        {
+            get
+            {
+                return _containerName;
             }
         }
 
@@ -50,20 +58,17 @@ namespace Nx.Cloud.Blobs
         {
             if (disposing)
             {
-                Container = null;
-
-                if (Logger != null)
+                if (_logger != null)
                 {
-                    Logger.Dispose();
-                    Logger = null;
+                    _logger.Dispose();
                 }
             }
         }
 
         public void Save(T data)
         {
-            Logger.Debug("Saving blob[{0}], {1} [bytes]", data.Id, data.Size);
-            ICloudBlob blob = GetBlob(data.Id);
+            _logger.Debug("Saving blob[{0}], {1} [bytes]", data.Id, data.Size);
+            var blob = GetBlob(data.Id);
 
             blob.Properties.ContentType = data.MetaData["ContentType"];
 
@@ -77,10 +82,10 @@ namespace Nx.Cloud.Blobs
 
         public void Append(string key, byte[] data)
         {
-            Logger.Debug("Appending to blob[{0}], {1} [bytes]", key, data.Length);
-            ICloudBlob blob = GetBlob(key);
+            _logger.Debug("Appending to blob[{0}], {1} [bytes]", key, data.Length);
+            var blob = GetBlob(key);
 
-            using (MemoryStream stream = new MemoryStream())
+            using (var stream = new MemoryStream())
             {
                 blob.DownloadToStream(stream);
                 stream.Write(data, 0, data.Length);
@@ -97,39 +102,39 @@ namespace Nx.Cloud.Blobs
             }
             catch
             {
-                Logger.Error("Requested blob[{0}] not found", key);
+                _logger.Error("Requested blob[{0}] not found", key);
                 return null;
             }
         }
 
         public ICloudBlob GetBlob(string key)
         {
-            Logger.Debug("Retrieving blob[{0}]", key);
-            return Container.GetBlockBlobReference(key);
+            _logger.Debug("Retrieving blob[{0}]", key);
+            return _container.GetBlockBlobReference(key);
         }
 
         public void Delete(string key)
         {
-            Logger.Debug("Deleting blob[{0}]", key);
-            ICloudBlob blob = GetBlob(key);
+            _logger.Debug("Deleting blob[{0}]", key);
+            var blob = GetBlob(key);
             blob.DeleteIfExists();
         }
 
         public IEnumerable<string> GetBlobKeys()
         {
-            return Container.ListBlobs().Select(bi => bi.Uri.ToString());
+            return _container.ListBlobs().Select(bi => bi.Uri.ToString());
         }
 
         protected abstract T GetBlobData(ICloudBlob blob);
 
         private static CloudBlobContainer GetContainer(ICloudConfiguration config, string containerName, BlobContainerPublicAccessType accessType)
         {
-            CloudBlobClient client = config.StorageAccount.CreateCloudBlobClient();
+            var client = config.StorageAccount.CreateCloudBlobClient();
 
-            CloudBlobContainer container = client.GetContainerReference(containerName);
+            var container = client.GetContainerReference(containerName);
             container.CreateIfNotExists(new BlobRequestOptions() { RetryPolicy = config.GlobalRetryPolicy }, null);
 
-            BlobContainerPermissions permissions = container.GetPermissions();
+            var permissions = container.GetPermissions();
             permissions.PublicAccess = accessType;
             container.SetPermissions(permissions);
 

@@ -8,12 +8,16 @@ namespace Nx.Cloud.Blobs
         where T : IBlobData
     {
         void Save(T data);
+
         void Append(string key, byte[] data);
 
         T Get(string key);
+
         ICloudBlob GetBlob(string key);
 
         int Count { get; }
+
+        string ContainerName { get; }
 
         IEnumerable<string> GetBlobKeys();
 

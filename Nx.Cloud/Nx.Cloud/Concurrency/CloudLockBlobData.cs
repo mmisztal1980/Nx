@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Nx.Cloud.Concurrency
 {
-    public class CloudLockBlobData : BlobData<CloudLockBlobData>
+    internal class CloudLockBlobData : BlobData<CloudLockBlobData>
     {
         public CloudLockBlobData(string id, byte[] data)
             : base(id, data, ContentType.Binary)
