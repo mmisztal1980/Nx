@@ -1,5 +1,4 @@
-﻿
-using Microsoft.WindowsAzure.Storage.Table;
+﻿using Microsoft.WindowsAzure.Storage.Table;
 using Microsoft.WindowsAzure.Storage.Table.DataServices;
 using Nx.Cloud.Configuration;
 using Nx.Logging;
@@ -10,24 +9,25 @@ using System.Linq;
 namespace Nx.Cloud.Tables
 {
     /// <summary>
-    /// The abstract implementation of a generic TableRepository. 
+    /// The abstract implementation of a generic TableRepository.
     /// Recommend creation via IoC container. Requires ILogFactory & ICloudConfiguration registrations in the IoC container
     /// </summary>
     /// <typeparam name="T">Type of the TableService entity</typeparam>
     public abstract class TableRepository<T> : ITableRepository<T>
       where T : TableServiceEntity, new()
     {
-        private readonly ILogger Logger;
-        private readonly ServiceContext Context;
         private readonly object _lock = new object();
+        private readonly ServiceContext Context;
+        private readonly ILogger Logger;
 
         public TableRepository(ICloudConfiguration config, string tableName)
         {
-            Logger = LogFactory.Instance.CreateLogger("TableRepository");
+            Logger = new NullLogger("TableRepository");
             Context = new ServiceContext(config, tableName);
         }
 
         #region IDisposable Members
+
         ~TableRepository()
         {
             Dispose(false);
@@ -54,9 +54,36 @@ namespace Nx.Cloud.Tables
                 }
             }
         }
-        #endregion
+
+        #endregion IDisposable Members
 
         #region ITableRepository<T> Members
+
+        public int Count()
+        {
+            return Context.Entries.Count();
+        }
+
+        public int Count(string partitioningKey)
+        {
+            return Get(partitioningKey).Count();
+        }
+
+        public void Delete(string partitioningKey, string rowKey)
+        {
+            Logger.Debug("Deleting row : {0} / {1}", partitioningKey, rowKey);
+            var item = Get(partitioningKey, rowKey);
+            if (item != null)
+            {
+                Context.DeleteObject(item);
+                Context.SaveChangesWithRetries();
+            }
+            else
+            {
+                Logger.Error("Failed to delete row {0} / {1}", partitioningKey, rowKey);
+            }
+        }
+
         public T Get(string partitioningKey, string rowKey)
         {
             try
@@ -101,21 +128,6 @@ namespace Nx.Cloud.Tables
             }
         }
 
-        public void Delete(string partitioningKey, string rowKey)
-        {
-            Logger.Debug("Deleting row : {0} / {1}", partitioningKey, rowKey);
-            var item = Get(partitioningKey, rowKey);
-            if (item != null)
-            {
-                Context.DeleteObject(item);
-                Context.SaveChangesWithRetries();
-            }
-            else
-            {
-                Logger.Error("Failed to delete row {0} / {1}", partitioningKey, rowKey);
-            }
-        }
-
         public bool Update(T value)
         {
             lock (_lock)
@@ -138,16 +150,7 @@ namespace Nx.Cloud.Tables
             }
         }
 
-        public int Count()
-        {
-            return Context.Entries.Count();
-        }
-
-        public int Count(string partitioningKey)
-        {
-            return Get(partitioningKey).Count();
-        }
-        #endregion
+        #endregion ITableRepository<T> Members
 
         private void Copy(T from, T to)
         {
@@ -164,6 +167,7 @@ namespace Nx.Cloud.Tables
         }
 
         #region Nested Types
+
         private class ServiceContext : TableServiceContext, IDisposable
         {
             public string TableName;
@@ -181,11 +185,13 @@ namespace Nx.Cloud.Tables
             }
 
             #region IDisposable Members
+
             ~ServiceContext()
             {
                 Dispose(false);
             }
-            #endregion
+
+            #endregion IDisposable Members
 
             public IQueryable<T> Entries
             {
@@ -195,6 +201,7 @@ namespace Nx.Cloud.Tables
                 }
             }
         }
-        #endregion
+
+        #endregion Nested Types
     }
 }

@@ -12,6 +12,17 @@ namespace Nx.Cloud.Queues
         private ILogger _Logger;
         private CloudQueue _Queue;
 
+        public QueueService(ICloudConfiguration config, string queueName)
+        {
+            _Logger = new NullLogger("QueueService");
+            var queueClient = config.StorageAccount.CreateCloudQueueClient();
+            _Queue = queueClient.GetQueueReference(queueName);
+            _Queue.CreateIfNotExists(new QueueRequestOptions()
+            {
+                RetryPolicy = config.GlobalRetryPolicy
+            }, null);
+        }
+
         public int Length
         {
             get
@@ -21,12 +32,14 @@ namespace Nx.Cloud.Queues
             }
         }
 
-        public void Enqueue(T data)
+        public void Clear()
         {
-            Condition.Require<ArgumentException>(data != null);
+            _Queue.Clear();
+        }
 
-            _Logger.Debug("Enqueueing item");
-            _Queue.AddMessage(new CloudQueueMessage(SerializationHelper<T>.SerializeToByteArray(data)));
+        public void Delete()
+        {
+            _Queue.Delete();
         }
 
         public T Dequeue()
@@ -49,20 +62,22 @@ namespace Nx.Cloud.Queues
             return result;
         }
 
-        public void Clear()
-        {
-            _Queue.Clear();
-        }
-
-        public void Delete()
-        {
-            _Queue.Delete();
-        }
-
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public void Enqueue(T data)
+        {
+            Condition.Require<ArgumentException>(data != null);
+
+            _Logger.Debug("Enqueueing item");
+            _Queue.AddMessage(new CloudQueueMessage(SerializationHelper<T>.SerializeToByteArray(data)));
+        }
+
+        protected virtual void OnDisposing()
+        {
         }
 
         private void Dispose(bool disposing)
@@ -73,21 +88,6 @@ namespace Nx.Cloud.Queues
                 _Logger.Dispose();
                 OnDisposing();
             }
-        }
-
-        protected virtual void OnDisposing()
-        {
-        }
-
-        public QueueService(ICloudConfiguration config, string queueName)
-        {
-            _Logger = LogFactory.Instance.CreateLogger("QueueService");
-            var queueClient = config.StorageAccount.CreateCloudQueueClient();
-            _Queue = queueClient.GetQueueReference(queueName);
-            _Queue.CreateIfNotExists(new QueueRequestOptions()
-            {
-                RetryPolicy = config.GlobalRetryPolicy
-            }, null);
         }
     }
 }

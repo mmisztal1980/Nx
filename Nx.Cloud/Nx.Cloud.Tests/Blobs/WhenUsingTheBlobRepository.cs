@@ -1,8 +1,8 @@
 ﻿using Ninject;
+using NUnit.Framework;
 using Nx.Cloud.Blobs;
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
 
 namespace Nx.Cloud.Tests.Blobs
 {
@@ -13,21 +13,6 @@ namespace Nx.Cloud.Tests.Blobs
         public WhenUsingTheBlobRepository()
         {
             DeleteBlobs();
-        }
-
-        private IList<TestBlobData> BuildTestData()
-        {
-            List<TestBlobData> result = new List<TestBlobData>();
-
-            for (int i = 0; i < Count; i++)
-            {
-                string id = string.Format("ID{0}", i);
-                byte[] data = new byte[20];
-
-                result.Add(new TestBlobData(id, data));
-            }
-
-            return result;
         }
 
         public void DeleteBlobs()
@@ -56,39 +41,7 @@ namespace Nx.Cloud.Tests.Blobs
         }
 
         [Test]
-        public void ShouldReturnNullForNonExistingKey()
-        {
-            Assert.DoesNotThrow(() =>
-            {
-                using (IBlobRepository<TestBlobData> repository = Kernel.Get<IBlobRepository<TestBlobData>>())
-                {
-                    TestBlobData entity = repository.Get(new Random().Next().ToString());
-                    Assert.Null(entity);
-                }
-            });
-        }
-
-        [Test]
-        public void ShouldSaveEntities()
-        {
-            Assert.DoesNotThrow(() =>
-            {
-                var data = BuildTestData();
-
-                using (IBlobRepository<TestBlobData> repository = Kernel.Get<IBlobRepository<TestBlobData>>())
-                {
-                    for (int i = 0; i < data.Count; i++)
-                    {
-                        repository.Save(data[i]);
-                    }
-
-                    Assert.AreEqual(Count, repository.Count);
-                }
-            });
-        }
-
-        [Test]
-        public void ShouldDeleteEntities()
+        public void ShouldDeleteEntitesByKey()
         {
             Assert.DoesNotThrow(() =>
             {
@@ -114,7 +67,7 @@ namespace Nx.Cloud.Tests.Blobs
         }
 
         [Test]
-        public void ShouldDeleteEntitesByKey()
+        public void ShouldDeleteEntities()
         {
             Assert.DoesNotThrow(() =>
             {
@@ -162,6 +115,53 @@ namespace Nx.Cloud.Tests.Blobs
                     }
                 }
             });
+        }
+
+        [Test]
+        public void ShouldReturnNullForNonExistingKey()
+        {
+            Assert.DoesNotThrow(() =>
+            {
+                using (IBlobRepository<TestBlobData> repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+                {
+                    TestBlobData entity = repository.Get(new Random().Next().ToString());
+                    Assert.Null(entity);
+                }
+            });
+        }
+
+        [Test]
+        public void ShouldSaveEntities()
+        {
+            Assert.DoesNotThrow(() =>
+            {
+                var data = BuildTestData();
+
+                using (IBlobRepository<TestBlobData> repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+                {
+                    for (int i = 0; i < data.Count; i++)
+                    {
+                        repository.Save(data[i]);
+                    }
+
+                    Assert.AreEqual(Count, repository.Count);
+                }
+            });
+        }
+
+        private IList<TestBlobData> BuildTestData()
+        {
+            List<TestBlobData> result = new List<TestBlobData>();
+
+            for (int i = 0; i < Count; i++)
+            {
+                string id = string.Format("ID{0}", i);
+                byte[] data = new byte[20];
+
+                result.Add(new TestBlobData(id, data));
+            }
+
+            return result;
         }
     }
 }
