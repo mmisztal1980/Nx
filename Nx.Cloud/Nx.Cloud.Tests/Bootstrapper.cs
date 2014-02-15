@@ -22,7 +22,8 @@ namespace Nx.Cloud.Tests
         protected override void ConfigureContainer()
         {
             this.Kernel.Bind<ICloudConfiguration>()
-                .ToConstant(CloudConfiguration.Instance)
+                .To<CloudConfiguration>()
+                .InSingletonScope()
                 .OnActivation((ctx, config) => config.Initialize(() => false, () => false));
 
             this.Kernel.RegisterTypeIfMissing<IBlobRepository<TestBlobData>, TestBlobDataRepository>(false);

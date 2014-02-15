@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using NCrunch.Framework;
+using Ninject;
 using NUnit.Framework;
 using Nx.Cloud.Blobs;
 using System;
@@ -8,6 +9,7 @@ namespace Nx.Cloud.Tests.Blobs
 {
     public class WhenUsingTheBlobRepository : CloudTestFixtureBase
     {
+        private const string BlobContainerResourceName = "blobContainer";
         private const int Count = 10;
 
         public WhenUsingTheBlobRepository()
@@ -19,17 +21,18 @@ namespace Nx.Cloud.Tests.Blobs
         {
             //Assert.IsTrue(StorageEmulatorIsRunning());
 
-            using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
-            {
-                var keysToDelete = repository.GetBlobKeys();
-                foreach (var key in keysToDelete)
-                {
-                    repository.Delete(key);
-                }
-            }
+            //using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+            //{
+            //    var keysToDelete = repository.GetBlobKeys();
+            //    foreach (var key in keysToDelete)
+            //    {
+            //        repository.Delete(key);
+            //    }
+            //}
         }
 
         [Test]
+        [ExclusivelyUses(BlobContainerResourceName)]
         public void ShouldCreateAndDisposeTheBlobRepository()
         {
             Assert.DoesNotThrow(() =>
@@ -41,6 +44,7 @@ namespace Nx.Cloud.Tests.Blobs
         }
 
         [Test]
+        [ExclusivelyUses(BlobContainerResourceName)]
         public void ShouldDeleteEntitesByKey()
         {
             Assert.DoesNotThrow(() =>
@@ -67,6 +71,7 @@ namespace Nx.Cloud.Tests.Blobs
         }
 
         [Test]
+        [ExclusivelyUses(BlobContainerResourceName)]
         public void ShouldDeleteEntities()
         {
             Assert.DoesNotThrow(() =>
@@ -93,6 +98,7 @@ namespace Nx.Cloud.Tests.Blobs
         }
 
         [Test]
+        [ExclusivelyUses(BlobContainerResourceName)]
         public void ShouldGetEntites()
         {
             Assert.DoesNotThrow(() =>
@@ -118,6 +124,7 @@ namespace Nx.Cloud.Tests.Blobs
         }
 
         [Test]
+        [ExclusivelyUses(BlobContainerResourceName)]
         public void ShouldReturnNullForNonExistingKey()
         {
             Assert.DoesNotThrow(() =>
@@ -131,6 +138,7 @@ namespace Nx.Cloud.Tests.Blobs
         }
 
         [Test]
+        [ExclusivelyUses(BlobContainerResourceName)]
         public void ShouldSaveEntities()
         {
             Assert.DoesNotThrow(() =>

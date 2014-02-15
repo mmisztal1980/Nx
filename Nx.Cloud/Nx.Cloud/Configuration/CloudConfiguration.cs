@@ -14,7 +14,9 @@ namespace Nx.Cloud.Configuration
     /// 3. When running outside of Azure, requires the presence of "cloudConfiguration" configuration section
     /// </remarks>
     /// </summary>
-    public class CloudConfiguration : Singleton<CloudConfiguration>, ICloudConfiguration
+    public class CloudConfiguration :
+        //Singleton<CloudConfiguration>,
+        ICloudConfiguration
     {
         private const string CloudConfigurationAlreadyInitializedError = "CloudConfiguration object already initialized";
         private const string CloudConfigurationConfigSectionMissingError = "The cloudConfiguration configuration section is missing in the configuration file";

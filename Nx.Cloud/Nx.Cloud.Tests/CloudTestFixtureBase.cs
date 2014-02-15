@@ -2,7 +2,7 @@
 
 namespace Nx.Cloud.Tests
 {
-    public abstract class CloudTestFixtureBase : TestFixtureBase
+    public abstract class CloudTestFixtureBase : TestFixture
     {
         protected CloudTestFixtureBase()
             : base()

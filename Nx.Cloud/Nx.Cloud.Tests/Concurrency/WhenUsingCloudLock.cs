@@ -3,6 +3,7 @@ using Nx.Cloud.Concurrency;
 
 namespace Nx.Cloud.Tests.Concurrency
 {
+    [Ignore]
     public class WhenUsingCloudLock : CloudTestFixtureBase
     {
         [Test]

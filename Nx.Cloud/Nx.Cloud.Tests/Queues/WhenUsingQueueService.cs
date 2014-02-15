@@ -1,9 +1,10 @@
 ﻿using Ninject;
-using Nx.Cloud.Queues;
 using NUnit.Framework;
+using Nx.Cloud.Queues;
 
 namespace Nx.Cloud.Tests.Queues
 {
+    [Ignore]
     public class WhenUsingQueueService : CloudTestFixtureBase
     {
         public WhenUsingQueueService()

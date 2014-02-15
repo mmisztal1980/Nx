@@ -1,48 +1,35 @@
 ﻿using Ninject;
-using Nx.Extensions;
-using System;
+using NUnit.Framework;
+using Nx.Kernel;
+using Nx.Logging;
 
 namespace Nx.Cloud.Tests
 {
-    public abstract class TestFixtureBase
+    public class TestFixture
     {
-        protected TestFixtureBase()
-        {
-            using (var bootstrapper = new Bootstrapper()
-                .ExtendBy<NxLoggingExtension>()
-                .ExtendBy<NxCloudExtension>())
-            {
-                Kernel = bootstrapper.Run();
-            }
-        }
-
-        ~TestFixtureBase()
-        {
-            Dispose(false);
-        }
-
+        // Not owned by TestFixture
         public IKernel Kernel { get; private set; }
 
-        public void Dispose()
+        // Owned by TestFixture
+        public ILogger Logger { get; private set; }
+
+        [TestFixtureSetUp]
+        public void FixtureSetUp()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            Kernel = AssemblySetup.Kernel;
+            Assert.NotNull(Kernel);
+            Assert.IsTrue(Kernel.IsRegistered<ILogFactory>());
+            Logger = Kernel.Get<ILogFactory>().CreateLogger("Test");
         }
 
-        protected virtual void OnDisposing()
+        [TestFixtureTearDown]
+        public void FixtureTearDown()
         {
-        }
+            Kernel = null;
 
-        private void Dispose(bool disposing)
-        {
-            if (disposing)
+            if (Logger != null)
             {
-                OnDisposing();
-
-                if (this.Kernel != null)
-                {
-                    this.Kernel.Dispose();
-                }
+                Logger.Dispose();
             }
         }
     }

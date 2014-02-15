@@ -121,7 +121,7 @@ namespace Nx.Cloud.Blobs
             var client = config.StorageAccount.CreateCloudBlobClient();
 
             var container = client.GetContainerReference(containerName);
-            container.CreateIfNotExists(new BlobRequestOptions() { RetryPolicy = config.GlobalRetryPolicy }, null);
+            container.CreateIfNotExists(new BlobRequestOptions() { RetryPolicy = config.GlobalRetryPolicy });
 
             var permissions = container.GetPermissions();
             permissions.PublicAccess = accessType;
