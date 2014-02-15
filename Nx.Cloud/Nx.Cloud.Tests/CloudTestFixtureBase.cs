@@ -1,10 +1,10 @@
-﻿
-using System.Diagnostics;
+﻿using System.Diagnostics;
+
 namespace Nx.Cloud.Tests
 {
     public abstract class CloudTestFixtureBase : TestFixtureBase
     {
-        public CloudTestFixtureBase()
+        protected CloudTestFixtureBase()
             : base()
         {
             if (!StorageEmulatorIsRunning)

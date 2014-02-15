@@ -10,13 +10,12 @@ namespace Nx.Cloud.Tests.Concurrency
         {
             Assert.DoesNotThrow(() =>
             {
-                using (CloudLock @lock = new CloudLock("testlock"))
+                using (var @lock = new CloudLock("testlock"))
                 {
                     Assert.True(@lock.HasLock);
                 }
             });
         }
-
 
         [Test]
         public void ShouldExecuteAnActionUsingTheSyntax()

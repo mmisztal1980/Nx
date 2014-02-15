@@ -21,17 +21,24 @@ namespace Nx.Cloud.Tests
 
         protected override void ConfigureContainer()
         {
-            //ParseConfiguration();
             this.Kernel.Bind<ICloudConfiguration>()
                 .ToConstant(CloudConfiguration.Instance)
-                .OnActivation((ctx, cc) =>
-                {
-                    cc.Initialize(() => false, () => false);
-                });
+                .OnActivation((ctx, config) => config.Initialize(() => false, () => false));
 
             this.Kernel.RegisterTypeIfMissing<IBlobRepository<TestBlobData>, TestBlobDataRepository>(false);
             this.Kernel.RegisterTypeIfMissing<ITableRepository<TestTableData>, TestTableRepository>(false);
             this.Kernel.RegisterTypeIfMissing<IQueueService<TestQueueItem>, TestQueueService>(false);
+        }
+
+        protected override IKernel CreateContainer()
+        {
+            return new StandardKernel();
+        }
+
+        private T GetConfiguration<T>(string name)
+            where T : ConfigurationSection
+        {
+            return ConfigurationManager.GetSection(name) as T;
         }
 
         private void ParseConfiguration()
@@ -41,17 +48,6 @@ namespace Nx.Cloud.Tests
             {
                 this.Kernel.RegisterInstance(cloudConfig);
             }
-        }
-
-        private T GetConfiguration<T>(string name)
-            where T : ConfigurationSection
-        {
-            return ConfigurationManager.GetSection(name) as T;
-        }
-
-        protected override IKernel CreateContainer()
-        {
-            return new StandardKernel();
         }
     }
 }

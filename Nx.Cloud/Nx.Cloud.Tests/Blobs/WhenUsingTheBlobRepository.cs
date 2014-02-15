@@ -8,7 +8,7 @@ namespace Nx.Cloud.Tests.Blobs
 {
     public class WhenUsingTheBlobRepository : CloudTestFixtureBase
     {
-        private int Count = 10;
+        private const int Count = 10;
 
         public WhenUsingTheBlobRepository()
         {
@@ -22,7 +22,7 @@ namespace Nx.Cloud.Tests.Blobs
             using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
             {
                 var keysToDelete = repository.GetBlobKeys();
-                foreach (string key in keysToDelete)
+                foreach (var key in keysToDelete)
                 {
                     repository.Delete(key);
                 }
@@ -34,7 +34,7 @@ namespace Nx.Cloud.Tests.Blobs
         {
             Assert.DoesNotThrow(() =>
             {
-                using (IBlobRepository<TestBlobData> repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+                using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
                 {
                 }
             });
@@ -47,7 +47,7 @@ namespace Nx.Cloud.Tests.Blobs
             {
                 var data = BuildTestData();
 
-                using (IBlobRepository<TestBlobData> repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+                using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
                 {
                     for (int i = 0; i < data.Count; i++)
                     {
@@ -73,7 +73,7 @@ namespace Nx.Cloud.Tests.Blobs
             {
                 var data = BuildTestData();
 
-                using (IBlobRepository<TestBlobData> repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+                using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
                 {
                     for (int i = 0; i < data.Count; i++)
                     {
@@ -99,7 +99,7 @@ namespace Nx.Cloud.Tests.Blobs
             {
                 var data = BuildTestData();
 
-                using (IBlobRepository<TestBlobData> repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+                using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
                 {
                     for (int i = 0; i < data.Count; i++)
                     {
@@ -108,7 +108,7 @@ namespace Nx.Cloud.Tests.Blobs
 
                     Assert.AreEqual(Count, repository.Count);
 
-                    foreach (TestBlobData entity in data)
+                    foreach (var entity in data)
                     {
                         var size = repository.Get(entity.Id).Size;
                         Assert.AreEqual(entity.Size, size);
@@ -122,7 +122,7 @@ namespace Nx.Cloud.Tests.Blobs
         {
             Assert.DoesNotThrow(() =>
             {
-                using (IBlobRepository<TestBlobData> repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+                using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
                 {
                     TestBlobData entity = repository.Get(new Random().Next().ToString());
                     Assert.Null(entity);
@@ -137,7 +137,7 @@ namespace Nx.Cloud.Tests.Blobs
             {
                 var data = BuildTestData();
 
-                using (IBlobRepository<TestBlobData> repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+                using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
                 {
                     for (int i = 0; i < data.Count; i++)
                     {
@@ -151,7 +151,7 @@ namespace Nx.Cloud.Tests.Blobs
 
         private IList<TestBlobData> BuildTestData()
         {
-            List<TestBlobData> result = new List<TestBlobData>();
+            var result = new List<TestBlobData>();
 
             for (int i = 0; i < Count; i++)
             {

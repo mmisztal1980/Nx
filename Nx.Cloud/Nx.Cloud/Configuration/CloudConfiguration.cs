@@ -16,44 +16,44 @@ namespace Nx.Cloud.Configuration
     /// </summary>
     public class CloudConfiguration : Singleton<CloudConfiguration>, ICloudConfiguration
     {
-        private const string CloudConfigurationSectionName = "cloudConfiguration";
-        private const string CloudConfigurationManagerConnectionStringSettingName = "StorageConnectionString";
-        private const string CloudConfigurationUninitializedError = "CloudConfiguration uninitialized";
         private const string CloudConfigurationAlreadyInitializedError = "CloudConfiguration object already initialized";
         private const string CloudConfigurationConfigSectionMissingError = "The cloudConfiguration configuration section is missing in the configuration file";
+        private const string CloudConfigurationManagerConnectionStringSettingName = "StorageConnectionString";
+        private const string CloudConfigurationSectionName = "cloudConfiguration";
+        private const string CloudConfigurationUninitializedError = "CloudConfiguration uninitialized";
 
+        private string _connectionString;
+        private IRetryPolicy _globalRetryPolicy;
+        private bool _initialized = false;
         private Func<bool> _isRunningInAzure;
         private Func<bool> _isRunningInAzureEmulator;
-        private bool _Initialized = false;
-        private string _ConnectionString;
+        private CloudStorageAccount _storageAccount;
 
         public CloudConfiguration()
         {
         }
 
-        public void Initialize(Func<bool> runningInAzure, Func<bool> runningInEmulator)
+        public string ConnectionString
         {
-            if (!_Initialized)
+            get
             {
-                Condition.ArgumentNotNull(runningInAzure, "runningInAzure");
-                Condition.ArgumentNotNull(runningInEmulator, "runningInEmulator");
+                Condition.Require<InvalidOperationException>(_initialized, CloudConfigurationUninitializedError);
+                return _connectionString;
+            }
+        }
 
-                _isRunningInAzure = runningInAzure;
-                _isRunningInAzureEmulator = runningInEmulator;
+        public IRetryPolicy GlobalRetryPolicy
+        {
+            get
+            {
+                Condition.Require<InvalidOperationException>(_initialized, CloudConfigurationUninitializedError);
 
-                _Initialized = true;
-
-                // Determine the ConnectionString
-                if (IsRunningInAzure)
+                if (_globalRetryPolicy == null)
                 {
-                    _ConnectionString = CloudConfigurationManager.GetSetting(CloudConfigurationManagerConnectionStringSettingName);
+                    _globalRetryPolicy = new LinearRetry(new TimeSpan(0, 0, 0, 0, 500), 5);
                 }
-                else
-                {
-                    CloudConfigurationSection configSection = GetConfigurationSection<CloudConfigurationSection>(CloudConfigurationSectionName);
-                    Condition.Require<ConfigurationException>(configSection != null, CloudConfigurationConfigSectionMissingError);
-                    _ConnectionString = configSection.StorageConnectionString;
-                }
+
+                return _globalRetryPolicy;
             }
         }
 
@@ -61,7 +61,7 @@ namespace Nx.Cloud.Configuration
         {
             get
             {
-                return _Initialized;
+                return _initialized;
             }
         }
 
@@ -69,7 +69,7 @@ namespace Nx.Cloud.Configuration
         {
             get
             {
-                Condition.Require<InvalidOperationException>(_Initialized, CloudConfigurationUninitializedError);
+                Condition.Require<InvalidOperationException>(_initialized, CloudConfigurationUninitializedError);
                 return _isRunningInAzure();
             }
         }
@@ -78,49 +78,49 @@ namespace Nx.Cloud.Configuration
         {
             get
             {
-                Condition.Require<InvalidOperationException>(_Initialized, CloudConfigurationUninitializedError);
+                Condition.Require<InvalidOperationException>(_initialized, CloudConfigurationUninitializedError);
                 return _isRunningInAzure() && _isRunningInAzureEmulator();
             }
         }
 
-        public string ConnectionString
-        {
-            get
-            {
-                Condition.Require<InvalidOperationException>(_Initialized, CloudConfigurationUninitializedError);
-                return _ConnectionString;
-            }
-        }
-
-        private CloudStorageAccount _StorageAccount;
         public CloudStorageAccount StorageAccount
         {
             get
             {
-                Condition.Require<InvalidOperationException>(_Initialized, CloudConfigurationUninitializedError);
+                Condition.Require<InvalidOperationException>(_initialized, CloudConfigurationUninitializedError);
 
-                if (_StorageAccount == null)
+                if (_storageAccount == null)
                 {
-                    _StorageAccount = CloudStorageAccount.Parse(ConnectionString);
+                    _storageAccount = CloudStorageAccount.Parse(ConnectionString);
                 }
 
-                return _StorageAccount;
+                return _storageAccount;
             }
         }
 
-        private IRetryPolicy _GlobalRetryPolicy;
-        public IRetryPolicy GlobalRetryPolicy
+        public void Initialize(Func<bool> runningInAzure, Func<bool> runningInEmulator)
         {
-            get
+            if (!_initialized)
             {
-                Condition.Require<InvalidOperationException>(_Initialized, CloudConfigurationUninitializedError);
+                Condition.ArgumentNotNull(runningInAzure, "runningInAzure");
+                Condition.ArgumentNotNull(runningInEmulator, "runningInEmulator");
 
-                if (_GlobalRetryPolicy == null)
+                _isRunningInAzure = runningInAzure;
+                _isRunningInAzureEmulator = runningInEmulator;
+
+                _initialized = true;
+
+                // Determine the ConnectionString
+                if (IsRunningInAzure)
                 {
-                    _GlobalRetryPolicy = new LinearRetry(new TimeSpan(0, 0, 0, 0, 500), 5);
+                    _connectionString = CloudConfigurationManager.GetSetting(CloudConfigurationManagerConnectionStringSettingName);
                 }
-
-                return _GlobalRetryPolicy;
+                else
+                {
+                    var configSection = GetConfigurationSection<CloudConfigurationSection>(CloudConfigurationSectionName);
+                    Condition.Require<ConfigurationException>(configSection != null, CloudConfigurationConfigSectionMissingError);
+                    _connectionString = configSection.StorageConnectionString;
+                }
             }
         }
 

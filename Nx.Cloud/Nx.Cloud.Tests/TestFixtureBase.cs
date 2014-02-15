@@ -6,9 +6,7 @@ namespace Nx.Cloud.Tests
 {
     public abstract class TestFixtureBase
     {
-        public IKernel Kernel { get; private set; }
-
-        public TestFixtureBase()
+        protected TestFixtureBase()
         {
             using (var bootstrapper = new Bootstrapper()
                 .ExtendBy<NxLoggingExtension>()
@@ -23,10 +21,16 @@ namespace Nx.Cloud.Tests
             Dispose(false);
         }
 
+        public IKernel Kernel { get; private set; }
+
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected virtual void OnDisposing()
+        {
         }
 
         private void Dispose(bool disposing)
@@ -40,10 +44,6 @@ namespace Nx.Cloud.Tests
                     this.Kernel.Dispose();
                 }
             }
-        }
-
-        protected virtual void OnDisposing()
-        {
         }
     }
 }
