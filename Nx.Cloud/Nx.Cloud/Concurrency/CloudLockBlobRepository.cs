@@ -1,14 +1,15 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
 using Nx.Cloud.Blobs;
 using Nx.Cloud.Configuration;
+using Nx.Logging;
 using System.IO;
 
 namespace Nx.Cloud.Concurrency
 {
     internal class CloudLockBlobRepository : BlobRepository<CloudLockBlobData>
     {
-        public CloudLockBlobRepository(ICloudConfiguration config)
-            : base(config, "cloudlocks")
+        public CloudLockBlobRepository(ILogFactory logFactory, ICloudConfiguration config)
+            : base(logFactory, config, "cloudlocks")
         {
         }
 

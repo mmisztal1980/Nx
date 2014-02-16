@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Nx.Cloud.Blobs
 {
@@ -15,16 +16,21 @@ namespace Nx.Cloud.Blobs
         private readonly string _containerName;
         private readonly ILogger _logger;
 
-        protected BlobRepository(ICloudConfiguration config, string containerName)
-            : this(config, containerName, BlobContainerPublicAccessType.Off)
+        protected BlobRepository(ILogFactory logFactory, ICloudConfiguration config, string containerName)
+            : this(logFactory, config, containerName, BlobContainerPublicAccessType.Off)
         {
         }
 
-        protected BlobRepository(ICloudConfiguration config, string containerName, BlobContainerPublicAccessType permission)
+        protected BlobRepository(ILogFactory logFactory, ICloudConfiguration config, string containerName, BlobContainerPublicAccessType permission)
+            : this(logFactory)
         {
-            _logger = new NullLogger("Repository");
             _containerName = containerName;
             _container = GetContainer(config, _containerName, permission);
+        }
+
+        private BlobRepository(ILogFactory logFactory)
+        {
+            _logger = logFactory.CreateLogger("BlobRepository");
         }
 
         ~BlobRepository()
@@ -58,6 +64,20 @@ namespace Nx.Cloud.Blobs
                 blob.DownloadToStream(stream);
                 stream.Write(data, 0, data.Length);
                 blob.UploadFromStream(stream);
+                stream.Close();
+            }
+        }
+
+        public async Task AppendAsync(string key, byte[] data)
+        {
+            _logger.Debug("Appending to blob[{0}], {1} [bytes]", key, data.Length);
+            var blob = GetBlob(key);
+
+            using (var stream = new MemoryStream())
+            {
+                blob.DownloadToStream(stream);
+                stream.Write(data, 0, data.Length);
+                await blob.UploadFromStreamAsync(stream);
                 stream.Close();
             }
         }
@@ -112,6 +132,21 @@ namespace Nx.Cloud.Blobs
             }
 
             blob.UploadFromStream(data.Data);
+        }
+
+        public async Task SaveAsync(T data)
+        {
+            _logger.Debug("Saving blob[{0}], {1} [bytes]", data.Id, data.Size);
+            var blob = GetBlob(data.Id);
+
+            blob.Properties.ContentType = data.MetaData["ContentType"];
+
+            foreach (var kvp in data.MetaData)
+            {
+                blob.Metadata.Add(kvp.Key, kvp.Value);
+            }
+
+            await blob.UploadFromStreamAsync(data.Data);
         }
 
         protected abstract T GetBlobData(ICloudBlob blob);

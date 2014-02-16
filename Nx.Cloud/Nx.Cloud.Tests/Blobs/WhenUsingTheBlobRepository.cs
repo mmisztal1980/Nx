@@ -141,20 +141,34 @@ namespace Nx.Cloud.Tests.Blobs
         [ExclusivelyUses(BlobContainerResourceName)]
         public void ShouldSaveEntities()
         {
-            Assert.DoesNotThrow(() =>
+            var data = BuildTestData();
+
+            using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
             {
-                var data = BuildTestData();
-
-                using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+                for (int i = 0; i < data.Count; i++)
                 {
-                    for (int i = 0; i < data.Count; i++)
-                    {
-                        repository.Save(data[i]);
-                    }
-
-                    Assert.AreEqual(Count, repository.Count);
+                    repository.Save(data[i]);
                 }
-            });
+
+                Assert.AreEqual(Count, repository.Count);
+            }
+        }
+
+        [Test]
+        [ExclusivelyUses(BlobContainerResourceName)]
+        public async void ShouldSaveEntitiesAsync()
+        {
+            var data = BuildTestData();
+
+            using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+            {
+                for (int i = 0; i < data.Count; i++)
+                {
+                    await repository.SaveAsync(data[i]);
+                }
+
+                Assert.AreEqual(Count, repository.Count);
+            }
         }
 
         private IList<TestBlobData> BuildTestData()

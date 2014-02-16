@@ -1,6 +1,7 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Nx.Cloud.Blobs
 {
@@ -9,7 +10,11 @@ namespace Nx.Cloud.Blobs
     {
         void Save(T data);
 
+        Task SaveAsync(T data);
+
         void Append(string key, byte[] data);
+
+        Task AppendAsync(string key, byte[] data);
 
         T Get(string key);
 
