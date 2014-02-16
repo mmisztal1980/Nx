@@ -5,6 +5,7 @@ using Nx.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Nx.Cloud.Tables
 {
@@ -16,22 +17,26 @@ namespace Nx.Cloud.Tables
     public abstract class TableRepository<T> : ITableRepository<T>
       where T : TableServiceEntity, new()
     {
-        private readonly object _lock = new object();
-        private readonly ServiceContext Context;
-        private readonly ILogger Logger;
+        private readonly ServiceContext _context;
+        private readonly ILogger _logger;
 
-        public TableRepository(ICloudConfiguration config, string tableName)
+        protected TableRepository(ILogFactory logFactory, ICloudConfiguration config, string tableName)
+            : this(logFactory)
         {
-            Logger = new NullLogger("TableRepository");
-            Context = new ServiceContext(config, tableName);
+            _context = new ServiceContext(config, tableName);
         }
 
-        #region IDisposable Members
+        private TableRepository(ILogFactory logFactory)
+        {
+            _logger = logFactory.CreateLogger("TableRepository");
+        }
 
         ~TableRepository()
         {
             Dispose(false);
         }
+
+        #region IDisposable Members
 
         public void Dispose()
         {
@@ -43,14 +48,14 @@ namespace Nx.Cloud.Tables
         {
             if (disposing)
             {
-                if (Context != null)
+                if (_context != null)
                 {
-                    Context.Dispose();
+                    _context.Dispose();
                 }
 
-                if (Logger != null)
+                if (_logger != null)
                 {
-                    Logger.Dispose();
+                    _logger.Dispose();
                 }
             }
         }
@@ -61,7 +66,7 @@ namespace Nx.Cloud.Tables
 
         public int Count()
         {
-            return Context.Entries.Count();
+            return _context.Entries.Count();
         }
 
         public int Count(string partitioningKey)
@@ -71,16 +76,31 @@ namespace Nx.Cloud.Tables
 
         public void Delete(string partitioningKey, string rowKey)
         {
-            Logger.Debug("Deleting row : {0} / {1}", partitioningKey, rowKey);
+            _logger.Debug("Deleting row : {0} / {1}", partitioningKey, rowKey);
             var item = Get(partitioningKey, rowKey);
             if (item != null)
             {
-                Context.DeleteObject(item);
-                Context.SaveChangesWithRetries();
+                _context.DeleteObject(item);
+                _context.SaveChangesWithRetries();
             }
             else
             {
-                Logger.Error("Failed to delete row {0} / {1}", partitioningKey, rowKey);
+                _logger.Error("Failed to delete row {0} / {1}", partitioningKey, rowKey);
+            }
+        }
+
+        public async Task DeleteAsync(string partitioningKey, string rowKey)
+        {
+            _logger.Debug("Deleting row : {0} / {1}", partitioningKey, rowKey);
+            var item = Get(partitioningKey, rowKey);
+            if (item != null)
+            {
+                _context.DeleteObject(item);
+                await _context.SaveChangesWithRetriesAsync();
+            }
+            else
+            {
+                _logger.Error("Failed to delete row {0} / {1}", partitioningKey, rowKey);
             }
         }
 
@@ -88,8 +108,8 @@ namespace Nx.Cloud.Tables
         {
             try
             {
-                Logger.Debug("Retrieving row : {0} / {1}", partitioningKey, rowKey);
-                return Context.Entries.Where(le => le.PartitionKey.Equals(partitioningKey) && le.RowKey.Equals(rowKey)).SingleOrDefault();
+                _logger.Debug("Retrieving row : {0} / {1}", partitioningKey, rowKey);
+                return _context.Entries.SingleOrDefault(le => le.PartitionKey.Equals(partitioningKey) && le.RowKey.Equals(rowKey));
             }
             catch (InvalidOperationException)
             {
@@ -99,55 +119,78 @@ namespace Nx.Cloud.Tables
 
         public IEnumerable<T> Get(string partitioningKey)
         {
-            Logger.Debug("Retrieving rows : {0} / *", partitioningKey);
-            return Context.Entries.Where(le => le.PartitionKey.Equals(partitioningKey)).AsEnumerable();
+            _logger.Debug("Retrieving rows : {0} / *", partitioningKey);
+            return _context.Entries.Where(le => le.PartitionKey.Equals(partitioningKey)).AsEnumerable();
         }
 
         public IEnumerable<T> Get(string partitioningKey, int skip, int take)
         {
-            Logger.Debug("Retrieving rows : {0} / skip : {1} take {2}", partitioningKey, skip, take);
-            return Context.Entries.Where(le => le.PartitionKey.Equals(partitioningKey)).Skip(skip).Take(take).AsEnumerable();
+            _logger.Debug("Retrieving rows : {0} / skip : {1} take {2}", partitioningKey, skip, take);
+            return _context.Entries.Where(le => le.PartitionKey.Equals(partitioningKey)).Skip(skip).Take(take).AsEnumerable();
         }
 
         public IEnumerable<T> Get(string partitioningKey, IEnumerable<string> rowKeys)
         {
-            Logger.Debug("Retrieving rows : {0} / (...)", partitioningKey);
-            return Context.Entries.Where(le => le.PartitionKey.Equals(partitioningKey) && rowKeys.Contains(le.RowKey)).AsEnumerable();
+            _logger.Debug("Retrieving rows : {0} / (...)", partitioningKey);
+            return _context.Entries.Where(le => le.PartitionKey.Equals(partitioningKey) && rowKeys.Contains(le.RowKey)).AsEnumerable();
         }
 
         public void Insert(string partitioningKey, string rowKey, T value)
         {
-            lock (_lock)
-            {
-                Logger.Debug("Inserting row : {0} / {1}", partitioningKey, rowKey);
-                value.PartitionKey = partitioningKey;
-                value.RowKey = rowKey;
+            _logger.Debug("Inserting row : {0} / {1}", partitioningKey, rowKey);
+            value.PartitionKey = partitioningKey;
+            value.RowKey = rowKey;
 
-                Context.AddObject(Context.TableName, value);
-                Context.SaveChangesWithRetries();
-            }
+            _context.AddObject(_context.TableName, value);
+            _context.SaveChangesWithRetries();
+        }
+
+        public async Task InsertAsync(string partitioningKey, string rowKey, T value)
+        {
+            _logger.Debug("Inserting row : {0} / {1}", partitioningKey, rowKey);
+            value.PartitionKey = partitioningKey;
+            value.RowKey = rowKey;
+
+            _context.AddObject(_context.TableName, value);
+            await _context.SaveChangesWithRetriesAsync();
         }
 
         public bool Update(T value)
         {
-            lock (_lock)
+            bool result = true;
+            try
             {
-                bool result = true;
-                try
-                {
-                    Context.UpdateObject(value);
-                    Logger.Debug("Updated row : {0} / {1}", value.PartitionKey, value.RowKey);
-                    Context.SaveChangesWithRetries();
-                }
-                catch (Exception ex)
-                {
-                    ex.GetType();
-                    Logger.Error("Failed to update row : {0} / {1}", value.PartitionKey, value.RowKey);
-                    result = false;
-                }
-
-                return result;
+                _context.UpdateObject(value);
+                _logger.Debug("Updated row : {0} / {1}", value.PartitionKey, value.RowKey);
+                _context.SaveChangesWithRetries();
             }
+            catch (Exception ex)
+            {
+                ex.GetType();
+                _logger.Error("Failed to update row : {0} / {1}", value.PartitionKey, value.RowKey);
+                result = false;
+            }
+
+            return result;
+        }
+
+        public async Task<bool> UpdateAsync(T value)
+        {
+            bool result = true;
+            try
+            {
+                _context.UpdateObject(value);
+                _logger.Debug("Updated row : {0} / {1}", value.PartitionKey, value.RowKey);
+                await _context.SaveChangesWithRetriesAsync();
+            }
+            catch (Exception ex)
+            {
+                ex.GetType();
+                _logger.Error("Failed to update row : {0} / {1}", value.PartitionKey, value.RowKey);
+                result = false;
+            }
+
+            return result;
         }
 
         #endregion ITableRepository<T> Members
@@ -170,7 +213,7 @@ namespace Nx.Cloud.Tables
 
         private class ServiceContext : TableServiceContext, IDisposable
         {
-            public string TableName;
+            public readonly string TableName;
 
             public ServiceContext(ICloudConfiguration config, string tableName)
                 : base(config.StorageAccount.CreateCloudTableClient())

@@ -5,7 +5,6 @@ using Nx.Cloud.Tables;
 
 namespace Nx.Cloud.Tests.Tables
 {
-    [Ignore]
     public class WhenUsingTableRepository : CloudTestFixtureBase
     {
         private int Count = 10;
