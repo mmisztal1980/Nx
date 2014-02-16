@@ -46,11 +46,11 @@ namespace Nx.Cloud.Blobs
             }
         }
 
-        public int Count
+        public long Count
         {
             get
             {
-                return _container.ListBlobs().Count();
+                return _container.ListBlobs().LongCount();
             }
         }
 
@@ -75,8 +75,8 @@ namespace Nx.Cloud.Blobs
 
             using (var stream = new MemoryStream())
             {
-                blob.DownloadToStream(stream);
-                stream.Write(data, 0, data.Length);
+                await blob.DownloadToStreamAsync(stream);
+                await stream.WriteAsync(data, 0, data.Length);
                 await blob.UploadFromStreamAsync(stream);
                 stream.Close();
             }
@@ -87,6 +87,13 @@ namespace Nx.Cloud.Blobs
             _logger.Debug("Deleting blob[{0}]", key);
             var blob = GetBlob(key);
             blob.DeleteIfExists();
+        }
+
+        public async Task DeleteAsync(string key)
+        {
+            _logger.Debug("Deleting blob[{0}]", key);
+            var blob = GetBlob(key);
+            await blob.DeleteIfExistsAsync();
         }
 
         public void Dispose()
@@ -108,6 +115,19 @@ namespace Nx.Cloud.Blobs
             }
         }
 
+        public async Task<T> GetAsync(string key)
+        {
+            try
+            {
+                return await GetBlobDataAsync(GetBlob(key));
+            }
+            catch
+            {
+                _logger.Error("Requested blob[{0}] not found", key);
+                return null;
+            }
+        }
+
         public ICloudBlob GetBlob(string key)
         {
             _logger.Debug("Retrieving blob[{0}]", key);
@@ -117,6 +137,18 @@ namespace Nx.Cloud.Blobs
         public IEnumerable<string> GetBlobKeys()
         {
             return _container.ListBlobs().Select(bi => bi.Uri.ToString());
+        }
+
+        public long GetBlobKeys(out IEnumerable<string> keys)
+        {
+            keys = _container.ListBlobs().Select(bi => bi.Uri.ToString());
+            return keys.LongCount();
+        }
+
+        public long GetBlobKeys(int pageIdx, int pageSize, out IEnumerable<string> keys)
+        {
+            keys = _container.ListBlobs().Skip(pageIdx - 1).Take(pageSize).Select(bi => bi.Uri.ToString());
+            return keys.LongCount();
         }
 
         public void Save(T data)
@@ -150,6 +182,8 @@ namespace Nx.Cloud.Blobs
         }
 
         protected abstract T GetBlobData(ICloudBlob blob);
+
+        protected abstract Task<T> GetBlobDataAsync(ICloudBlob blob);
 
         private static CloudBlobContainer GetContainer(ICloudConfiguration config, string containerName, BlobContainerPublicAccessType accessType)
         {

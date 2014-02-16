@@ -12,23 +12,25 @@ namespace Nx.Cloud.Tests.Blobs
         private const string BlobContainerResourceName = "blobContainer";
         private const int Count = 10;
 
-        public WhenUsingTheBlobRepository()
+        [SetUp]
+        public void SetUp()
         {
-            DeleteBlobs();
-        }
+            using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+            {
+                var keys = repository.GetBlobKeys();
+                foreach (var key in keys)
+                {
+                    repository.Delete(key);
+                }
 
-        public void DeleteBlobs()
-        {
-            //Assert.IsTrue(StorageEmulatorIsRunning());
+                var data = BuildTestData();
+                for (int i = 0; i < data.Count; i++)
+                {
+                    repository.Save(data[i]);
+                }
 
-            //using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
-            //{
-            //    var keysToDelete = repository.GetBlobKeys();
-            //    foreach (var key in keysToDelete)
-            //    {
-            //        repository.Delete(key);
-            //    }
-            //}
+                Assert.AreEqual(Count, repository.Count);
+            }
         }
 
         [Test]
@@ -47,80 +49,104 @@ namespace Nx.Cloud.Tests.Blobs
         [ExclusivelyUses(BlobContainerResourceName)]
         public void ShouldDeleteEntitesByKey()
         {
-            Assert.DoesNotThrow(() =>
+            using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
             {
-                var data = BuildTestData();
+                var keys = repository.GetBlobKeys();
 
-                using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+                foreach (var key in keys)
                 {
-                    for (int i = 0; i < data.Count; i++)
-                    {
-                        repository.Save(data[i]);
-                    }
-
-                    Assert.AreEqual(Count, repository.Count);
-
-                    foreach (TestBlobData entity in data)
-                    {
-                        repository.Delete(entity.Id);
-                    }
-
-                    Assert.AreEqual(0, repository.Count);
+                    repository.Delete(key);
                 }
-            });
+
+                Assert.AreEqual(0, repository.Count);
+            }
+        }
+
+        [Test]
+        [ExclusivelyUses(BlobContainerResourceName)]
+        public async void ShouldDeleteEntitesByKeyAsync()
+        {
+            using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+            {
+                var keys = repository.GetBlobKeys();
+
+                foreach (var key in keys)
+                {
+                    await repository.DeleteAsync(key);
+                }
+
+                Assert.AreEqual(0, repository.Count);
+            }
         }
 
         [Test]
         [ExclusivelyUses(BlobContainerResourceName)]
         public void ShouldDeleteEntities()
         {
-            Assert.DoesNotThrow(() =>
+            var data = BuildTestData();
+
+            using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
             {
-                var data = BuildTestData();
-
-                using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+                for (int i = 0; i < data.Count; i++)
                 {
-                    for (int i = 0; i < data.Count; i++)
-                    {
-                        repository.Save(data[i]);
-                    }
-
-                    Assert.AreEqual(Count, repository.Count);
-
-                    foreach (TestBlobData entity in data)
-                    {
-                        repository.Delete(entity.Id);
-                    }
-
-                    Assert.AreEqual(0, repository.Count);
+                    repository.Save(data[i]);
                 }
-            });
+
+                Assert.AreEqual(Count, repository.Count);
+
+                foreach (TestBlobData entity in data)
+                {
+                    repository.Delete(entity.Id);
+                }
+
+                Assert.AreEqual(0, repository.Count);
+            }
         }
 
         [Test]
         [ExclusivelyUses(BlobContainerResourceName)]
         public void ShouldGetEntites()
         {
-            Assert.DoesNotThrow(() =>
+            var data = BuildTestData();
+
+            using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
             {
-                var data = BuildTestData();
-
-                using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+                for (int i = 0; i < data.Count; i++)
                 {
-                    for (int i = 0; i < data.Count; i++)
-                    {
-                        repository.Save(data[i]);
-                    }
-
-                    Assert.AreEqual(Count, repository.Count);
-
-                    foreach (var entity in data)
-                    {
-                        var size = repository.Get(entity.Id).Size;
-                        Assert.AreEqual(entity.Size, size);
-                    }
+                    repository.Save(data[i]);
                 }
-            });
+
+                Assert.AreEqual(Count, repository.Count);
+
+                foreach (var entity in data)
+                {
+                    var size = repository.Get(entity.Id).Size;
+                    Assert.AreEqual(entity.Size, size);
+                }
+            }
+        }
+
+        [Test]
+        [ExclusivelyUses(BlobContainerResourceName)]
+        public async void ShouldGetEntitesAsync()
+        {
+            var data = BuildTestData();
+
+            using (var repository = Kernel.Get<IBlobRepository<TestBlobData>>())
+            {
+                for (int i = 0; i < data.Count; i++)
+                {
+                    await repository.SaveAsync(data[i]);
+                }
+
+                Assert.AreEqual(Count, repository.Count);
+
+                foreach (var entity in data)
+                {
+                    var size = (await repository.GetAsync(entity.Id)).Size;
+                    Assert.AreEqual(entity.Size, size);
+                }
+            }
         }
 
         [Test]

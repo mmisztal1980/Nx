@@ -3,6 +3,7 @@ using Nx.Cloud.Blobs;
 using Nx.Cloud.Configuration;
 using Nx.Logging;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Nx.Cloud.Tests.Blobs
 {
@@ -17,6 +18,13 @@ namespace Nx.Cloud.Tests.Blobs
         {
             var stream = new MemoryStream();
             blob.DownloadToStream(stream);
+            return new TestBlobData(blob.Name, stream);
+        }
+
+        protected async override Task<TestBlobData> GetBlobDataAsync(ICloudBlob blob)
+        {
+            var stream = new MemoryStream();
+            await blob.DownloadToStreamAsync(stream);
             return new TestBlobData(blob.Name, stream);
         }
     }

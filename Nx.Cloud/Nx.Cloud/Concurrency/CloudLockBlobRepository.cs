@@ -3,6 +3,7 @@ using Nx.Cloud.Blobs;
 using Nx.Cloud.Configuration;
 using Nx.Logging;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Nx.Cloud.Concurrency
 {
@@ -15,8 +16,15 @@ namespace Nx.Cloud.Concurrency
 
         protected override CloudLockBlobData GetBlobData(ICloudBlob blob)
         {
-            MemoryStream data = new MemoryStream();
+            var data = new MemoryStream();
             blob.DownloadToStream(data);
+            return new CloudLockBlobData(blob.Name, data);
+        }
+
+        protected async override Task<CloudLockBlobData> GetBlobDataAsync(ICloudBlob blob)
+        {
+            var data = new MemoryStream();
+            await blob.DownloadToStreamAsync(data);
             return new CloudLockBlobData(blob.Name, data);
         }
     }

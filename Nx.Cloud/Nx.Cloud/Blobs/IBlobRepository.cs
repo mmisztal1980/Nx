@@ -8,24 +8,32 @@ namespace Nx.Cloud.Blobs
     public interface IBlobRepository<T> : IDisposable
         where T : IBlobData
     {
-        void Save(T data);
+        string ContainerName { get; }
 
-        Task SaveAsync(T data);
+        long Count { get; }
 
         void Append(string key, byte[] data);
 
         Task AppendAsync(string key, byte[] data);
 
+        void Delete(string key);
+
+        Task DeleteAsync(string key);
+
         T Get(string key);
+
+        Task<T> GetAsync(string key);
 
         ICloudBlob GetBlob(string key);
 
-        int Count { get; }
-
-        string ContainerName { get; }
-
         IEnumerable<string> GetBlobKeys();
 
-        void Delete(string key);
+        long GetBlobKeys(out IEnumerable<string> keys);
+
+        long GetBlobKeys(int pageIdx, int pageSize, out IEnumerable<string> keys);
+
+        void Save(T data);
+
+        Task SaveAsync(T data);
     }
 }
