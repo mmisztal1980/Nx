@@ -74,6 +74,25 @@ namespace Nx.Cloud.Tables
             return Get(partitioningKey).Count();
         }
 
+        public void Delete(string partitioningKey)
+        {
+            _logger.Debug("Deleting rows : {0} / *", partitioningKey);
+            var items = Get(partitioningKey);
+            if (items != null)
+            {
+                foreach (var item in items)
+                {
+                    _context.DeleteObject(item);
+                }
+
+                _context.SaveChangesWithRetries();
+            }
+            else
+            {
+                _logger.Error("Failed to delete row {0} / *", partitioningKey);
+            }
+        }
+
         public void Delete(string partitioningKey, string rowKey)
         {
             _logger.Debug("Deleting row : {0} / {1}", partitioningKey, rowKey);
@@ -86,6 +105,25 @@ namespace Nx.Cloud.Tables
             else
             {
                 _logger.Error("Failed to delete row {0} / {1}", partitioningKey, rowKey);
+            }
+        }
+
+        public async Task DeleteAsync(string partitioningKey)
+        {
+            _logger.Debug("Deleting rows : {0} / *", partitioningKey);
+            var items = Get(partitioningKey);
+            if (items != null)
+            {
+                foreach (var item in items)
+                {
+                    _context.DeleteObject(item);
+                }
+
+                await _context.SaveChangesWithRetriesAsync();
+            }
+            else
+            {
+                _logger.Error("Failed to delete row {0} / *", partitioningKey);
             }
         }
 
@@ -109,7 +147,9 @@ namespace Nx.Cloud.Tables
             try
             {
                 _logger.Debug("Retrieving row : {0} / {1}", partitioningKey, rowKey);
-                return _context.Entries.SingleOrDefault(le => le.PartitionKey.Equals(partitioningKey) && le.RowKey.Equals(rowKey));
+                // ReSharper disable ReplaceWithSingleCallToSingleOrDefault
+                return _context.Entries.Where(le => le.PartitionKey.Equals(partitioningKey) && le.RowKey.Equals(rowKey)).SingleOrDefault();
+                // ReSharper restore ReplaceWithSingleCallToSingleOrDefault
             }
             catch (InvalidOperationException)
             {
