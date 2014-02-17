@@ -1,12 +1,13 @@
 ﻿using Nx.Cloud.Configuration;
 using Nx.Cloud.Queues;
+using Nx.Logging;
 
 namespace Nx.Cloud.Tests.Queues
 {
     public class TestQueueService : QueueService<TestQueueItem>
     {
-        public TestQueueService(ICloudConfiguration config)
-            : base(config, "testqueue")
+        public TestQueueService(ILogFactory logFactory, ICloudConfiguration config)
+            : base(logFactory, config, "testqueue")
         {
         }
     }

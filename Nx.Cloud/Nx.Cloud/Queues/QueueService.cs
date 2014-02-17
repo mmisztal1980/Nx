@@ -9,53 +9,60 @@ namespace Nx.Cloud.Queues
     public class QueueService<T> : IQueueService<T>
         where T : class, new()
     {
-        private ILogger _Logger;
-        private CloudQueue _Queue;
+        private readonly ILogger _logger;
+        private CloudQueue _queue;
 
-        public QueueService(ICloudConfiguration config, string queueName)
+        public QueueService(ILogFactory logFactory,
+            ICloudConfiguration config, string queueName)
+            : this(logFactory)
         {
-            _Logger = new NullLogger("QueueService");
             var queueClient = config.StorageAccount.CreateCloudQueueClient();
-            _Queue = queueClient.GetQueueReference(queueName);
-            _Queue.CreateIfNotExists(new QueueRequestOptions()
+            _queue = queueClient.GetQueueReference(queueName);
+            _queue.CreateIfNotExists(new QueueRequestOptions()
             {
                 RetryPolicy = config.GlobalRetryPolicy
             }, null);
+        }
+
+        private QueueService(ILogFactory logFactory)
+        {
+            _logger = logFactory.CreateLogger("QueueService");
         }
 
         public int Length
         {
             get
             {
-                _Queue.FetchAttributes();
-                return _Queue.ApproximateMessageCount ?? 0;
+                _queue.FetchAttributes();
+                return _queue.ApproximateMessageCount ?? 0;
             }
         }
 
         public void Clear()
         {
-            _Queue.Clear();
+            _queue.Clear();
         }
 
         public void Delete()
         {
-            _Queue.Delete();
+            _queue.Delete();
         }
 
         public T Dequeue()
         {
             T result;
-            _Logger.Debug("Attempting to dequeue item");
-            CloudQueueMessage message = _Queue.GetMessage();
+            _logger.Debug("Attempting to dequeue item");
+
+            var message = _queue.GetMessage();
             if (message != null)
             {
                 result = SerializationHelper<T>.Deserialize(message.AsBytes);
-                _Queue.DeleteMessage(message);
-                _Logger.Debug("Item dequeued");
+                _queue.DeleteMessage(message);
+                _logger.Debug("Item dequeued");
             }
             else
             {
-                _Logger.Debug("There was no item in the queue");
+                _logger.Debug("There was no item in the queue");
                 result = null;
             }
 
@@ -72,8 +79,8 @@ namespace Nx.Cloud.Queues
         {
             Condition.Require<ArgumentException>(data != null);
 
-            _Logger.Debug("Enqueueing item");
-            _Queue.AddMessage(new CloudQueueMessage(SerializationHelper<T>.SerializeToByteArray(data)));
+            _logger.Debug("Enqueueing item");
+            _queue.AddMessage(new CloudQueueMessage(SerializationHelper<T>.SerializeToByteArray(data)));
         }
 
         protected virtual void OnDisposing()
@@ -84,8 +91,8 @@ namespace Nx.Cloud.Queues
         {
             if (disposing)
             {
-                _Queue = null;
-                _Logger.Dispose();
+                _queue = null;
+                _logger.Dispose();
                 OnDisposing();
             }
         }

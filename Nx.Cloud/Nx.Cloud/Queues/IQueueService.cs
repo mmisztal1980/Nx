@@ -6,9 +6,13 @@ namespace Nx.Cloud.Queues
         where T : class, new()
     {
         int Length { get; }
-        void Enqueue(T data);
-        T Dequeue();
+
         void Clear();
+
         void Delete();
+
+        T Dequeue();
+
+        void Enqueue(T data);
     }
 }

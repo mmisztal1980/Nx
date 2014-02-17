@@ -7,14 +7,14 @@ namespace Nx.Extensions
 {
     public class NxCloudExtension : IBootstrapperExtension
     {
-        public void Extend(IKernel kernel)
-        {
-            kernel.Bind<IBlobRepository<CloudLockBlobData>>().To<CloudLockBlobRepository>();
-        }
-
         public string Name
         {
             get { return "Nx.Cloud Extension"; }
+        }
+
+        public void Extend(IKernel kernel)
+        {
+            kernel.Bind<IBlobRepository<CloudLockBlobData>>().To<CloudLockBlobRepository>();
         }
     }
 }

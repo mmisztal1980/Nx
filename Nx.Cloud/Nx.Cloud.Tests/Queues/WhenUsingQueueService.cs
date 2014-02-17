@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using NCrunch.Framework;
+using Ninject;
 using NUnit.Framework;
 using Nx.Cloud.Queues;
 
@@ -7,9 +8,12 @@ namespace Nx.Cloud.Tests.Queues
     [Ignore]
     public class WhenUsingQueueService : CloudTestFixtureBase
     {
-        public WhenUsingQueueService()
+        private const string QueueResourceName = "queue";
+
+        [SetUp]
+        public void Setup()
         {
-            using (IQueueService<TestQueueItem> queueService = Kernel.Get<IQueueService<TestQueueItem>>())
+            using (var queueService = Kernel.Get<IQueueService<TestQueueItem>>())
             {
                 queueService.Clear();
                 Assert.AreEqual(0, queueService.Length);
@@ -17,37 +21,33 @@ namespace Nx.Cloud.Tests.Queues
         }
 
         [Test]
+        [ExclusivelyUses(QueueResourceName)]
         public void ShouldCreateAndDisposeTheQueueService()
         {
-            Assert.DoesNotThrow(() =>
+            using (var queueService = Kernel.Get<IQueueService<TestQueueItem>>())
             {
-                using (IQueueService<TestQueueItem> queueService = Kernel.Get<IQueueService<TestQueueItem>>())
-                {
-                }
-            });
+            }
         }
 
         [Test]
+        [ExclusivelyUses(QueueResourceName)]
         public void ShouldEnqueueAndDequeueAnItem()
         {
-            Assert.DoesNotThrow(() =>
+            using (var queueService = Kernel.Get<IQueueService<TestQueueItem>>())
             {
-                using (IQueueService<TestQueueItem> queueService = Kernel.Get<IQueueService<TestQueueItem>>())
-                {
-                    Assert.AreEqual(0, queueService.Length);
+                Assert.AreEqual(0, queueService.Length);
 
-                    var enqueuedItem = new TestQueueItem() { Data = 3 };
-                    queueService.Enqueue(enqueuedItem);
+                var enqueuedItem = new TestQueueItem() { Data = 3 };
+                queueService.Enqueue(enqueuedItem);
 
-                    Assert.AreEqual(1, queueService.Length);
+                Assert.AreEqual(1, queueService.Length);
 
-                    var dequeuedItem = queueService.Dequeue();
+                var dequeuedItem = queueService.Dequeue();
 
-                    Assert.NotNull(dequeuedItem);
-                    Assert.AreEqual(enqueuedItem.Data, dequeuedItem.Data);
-                    Assert.AreEqual(0, queueService.Length);
-                }
-            });
+                Assert.NotNull(dequeuedItem);
+                Assert.AreEqual(enqueuedItem.Data, dequeuedItem.Data);
+                Assert.AreEqual(0, queueService.Length);
+            }
         }
     }
 }
