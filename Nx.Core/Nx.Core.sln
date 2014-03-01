@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B32C039F-8837-456B-B01D-B316BE89BDD4}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -8,12 +10,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B32C03
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Core", "Nx.Core\Nx.Core.csproj", "{9CCCD560-55EE-4969-A90B-8C82352E118E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".version", ".version", "{CE878F7D-3123-429B-BE41-EACD65444308}"
 	ProjectSection(SolutionItems) = preProject
 		.version\AssemblyVersion.cs = .version\AssemblyVersion.cs
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Core", "Nx.Core\Nx.Core.csproj", "{9CCCD560-55EE-4969-A90B-8C82352E118E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Core.Tests", "Nx.Core.Tests\Nx.Core.Tests.csproj", "{5A0F33E9-4915-4FE0-9BCE-80F873C47FEF}"
 EndProject
