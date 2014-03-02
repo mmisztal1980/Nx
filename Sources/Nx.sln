@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{DDB4BC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portable.Nx.Core", "Portable.Nx.Core\Portable.Nx.Core.csproj", "{84544A1C-58E2-43DB-AEE2-F35E9B5307F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Core", "Nx.Core\Nx.Core.csproj", "{7CF46FB7-2396-4C6E-A74F-13D61173EA41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,12 +39,17 @@ Global
 		{84544A1C-58E2-43DB-AEE2-F35E9B5307F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84544A1C-58E2-43DB-AEE2-F35E9B5307F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84544A1C-58E2-43DB-AEE2-F35E9B5307F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CF46FB7-2396-4C6E-A74F-13D61173EA41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CF46FB7-2396-4C6E-A74F-13D61173EA41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CF46FB7-2396-4C6E-A74F-13D61173EA41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CF46FB7-2396-4C6E-A74F-13D61173EA41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{84544A1C-58E2-43DB-AEE2-F35E9B5307F6} = {3050529C-B2A9-4C1A-B715-EFCFF069F399}
+		{7CF46FB7-2396-4C6E-A74F-13D61173EA41} = {3050529C-B2A9-4C1A-B715-EFCFF069F399}
 		{3F65547F-9090-4C02-AF6D-F105B3C07CC7} = {DDB4BCF2-1794-49EF-8543-DBE60B84FBCF}
 	EndGlobalSection
 EndGlobal

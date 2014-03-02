@@ -8,12 +8,14 @@
     <ProjectGuid>{84544A1C-58E2-43DB-AEE2-F35E9B5307F6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Portable.Nx.Core</RootNamespace>
+    <RootNamespace>Nx</RootNamespace>
     <AssemblyName>Portable.Nx.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile158</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,16 +36,66 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <Folder Include="Bootstrappers\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Kernel\" />
-    <Folder Include="Logging\" />
-    <Folder Include="Modules\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Nx.Core\Bootstrappers\BootstrapperBase.cs">
+      <Link>Bootstrappers\BootstrapperBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Nx.Core\Bootstrappers\HardcodedLoadingStrategy.cs">
+      <Link>Bootstrappers\HardcodedLoadingStrategy.cs</Link>
+    </Compile>
+    <Compile Include="..\Nx.Core\Bootstrappers\IBootstrapper.cs">
+      <Link>Bootstrappers\IBootstrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\Nx.Core\Bootstrappers\IBootstrapperExtension.cs">
+      <Link>Bootstrappers\IBootstrapperExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Nx.Core\Bootstrappers\IModuleLoadingStrategy.cs">
+      <Link>Bootstrappers\IModuleLoadingStrategy.cs</Link>
+    </Compile>
+    <Compile Include="..\Nx.Core\Condition.cs">
+      <Link>Condition.cs</Link>
+    </Compile>
+    <Compile Include="..\Nx.Core\Kernel\KernelExtensions.cs">
+      <Link>Kernel\KernelExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Nx.Core\Logging\ILogFactory.cs">
+      <Link>Logging\ILogFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Nx.Core\Logging\ILogger.cs">
+      <Link>Logging\ILogger.cs</Link>
+    </Compile>
+    <Compile Include="..\Nx.Core\Logging\LogFactory.cs">
+      <Link>Logging\LogFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Nx.Core\Logging\NullLogger.cs">
+      <Link>Logging\NullLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\Nx.Core\Modules\Module.cs">
+      <Link>Modules\Module.cs</Link>
+    </Compile>
+    <Compile Include="..\Nx.Core\Singleton.cs">
+      <Link>Singleton.cs</Link>
+    </Compile>
+    <Compile Include="Extensions\NxServiceLocatorExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator.NinjectAdapter">
+      <HintPath>..\packages\Portable.CommonServiceLocator.NinjectAdapter.1.2.3\lib\portable-net4+sl4+wp71+win8\CommonServiceLocator.NinjectAdapter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\Portable.CommonServiceLocator.1.2.2\lib\portable-net4+sl4+wp7+win8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Common">
+      <HintPath>..\packages\Portable.Ninject.3.0.7\lib\portable-net4+sl4+wp71+win8\Ninject.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
