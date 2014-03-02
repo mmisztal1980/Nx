@@ -1,13 +1,4 @@
-﻿using System.IO;
-using System.Reflection;
-using Ninject;
-
-#if !PORTABLE
-
-using Ninject.Extensions.Conventions;
-
-#endif
-
+﻿using Ninject;
 using Nx.Logging;
 using System;
 using System.Linq;
@@ -169,33 +160,6 @@ namespace Nx.Kernel
         }
 
         #endregion UnregisterType<TType>
-
-#if !PORTABLE
-
-        #region AutoRegister
-
-        public static IKernel AutoRegister(this IKernel kernel, Assembly assembly)
-        {
-            kernel.Load(assembly);
-
-            kernel.Bind(scanner => scanner.FromAssembliesInPath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
-                                    .Select(IsServiceType)
-                                    .BindDefaultInterface()
-                                    .Configure(binding => binding.InSingletonScope()));
-
-            return kernel;
-        }
-
-        private static bool IsServiceType(Type type)
-        {
-            return type.IsClass && type.GetInterfaces().Any(intface => intface.Name == "I" + type.Name);
-        }
-
-        
-
-        #endregion AutoRegister
-
-#endif
 
         internal static ILogger GetLogger(this IKernel kernel, string loggerName)
         {

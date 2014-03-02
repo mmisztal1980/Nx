@@ -58,7 +58,6 @@
     <Compile Include="Bootstrappers\IModuleLoadingStrategy.cs" />
     <Compile Include="Condition.cs" />
     <Compile Include="Kernel\KernelExtensions.cs" />
-    <Compile Include="Kernel\ReflectionExtensions.cs" />
     <Compile Include="Logging\ILogFactory.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\LogFactory.cs">
