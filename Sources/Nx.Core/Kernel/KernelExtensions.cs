@@ -1,4 +1,13 @@
-﻿using Ninject;
+﻿using System.IO;
+using System.Reflection;
+using Ninject;
+
+#if !PORTABLE
+
+using Ninject.Extensions.Conventions;
+
+#endif
+
 using Nx.Logging;
 using System;
 using System.Linq;
@@ -16,7 +25,7 @@ namespace Nx.Kernel
 
         public static bool IsRegistered(this IKernel kernel, Type type)
         {
-            return kernel.GetBindings(type).Count() > 0;
+            return kernel.GetBindings(type).Any();
         }
 
         #endregion IsRegistered
@@ -25,7 +34,7 @@ namespace Nx.Kernel
 
         public static void RegisterInstance<T>(this IKernel kernel, T instance)
         {
-            using (ILogger log = kernel.GetLogger("SYSTEM"))
+            using (var log = kernel.GetLogger("SYSTEM"))
             {
                 log.Info("Registering instance of type {0}", instance.GetType().Name);
                 kernel.Bind<T>().ToConstant(instance);
@@ -35,7 +44,7 @@ namespace Nx.Kernel
         public static void RegisterInstance<TFrom, TTo>(this IKernel kernel, TTo instance)
             where TTo : TFrom
         {
-            using (ILogger log = kernel.GetLogger("SYSTEM"))
+            using (var log = kernel.GetLogger("SYSTEM"))
             {
                 log.Info("Registering instance of type {0}", typeof(TFrom).Name);
                 kernel.Bind<TFrom>().ToConstant(instance);
@@ -53,7 +62,7 @@ namespace Nx.Kernel
 
         public static void RegisterTypeIfMissing(this IKernel kernel, Type type, bool singleton)
         {
-            using (ILogger log = kernel.GetLogger("SYSTEM"))
+            using (var log = kernel.GetLogger("SYSTEM"))
             {
                 if (!kernel.IsRegistered(type))
                 {
@@ -77,7 +86,7 @@ namespace Nx.Kernel
 
         public static void RegisterTypeIfMissing(this IKernel kernel, Type type, string key, bool singleton)
         {
-            using (ILogger log = kernel.GetLogger("SYSTEM"))
+            using (var log = kernel.GetLogger("SYSTEM"))
             {
                 if (!kernel.IsRegistered(type))
                 {
@@ -110,7 +119,7 @@ namespace Nx.Kernel
 
         public static void RegisterTypeIfMissing(this IKernel kernel, Type from, Type to, bool singleton)
         {
-            using (ILogger log = kernel.GetLogger("SYSTEM"))
+            using (var log = kernel.GetLogger("SYSTEM"))
             {
                 if (!kernel.IsRegistered(from))
                 {
@@ -129,7 +138,7 @@ namespace Nx.Kernel
 
         public static void RegisterTypeIfMissing(this IKernel kernel, Type from, Type to, string key, bool singleton)
         {
-            using (ILogger log = kernel.GetLogger("SYSTEM"))
+            using (var log = kernel.GetLogger("SYSTEM"))
             {
                 if (!kernel.IsRegistered(from))
                 {
@@ -160,6 +169,33 @@ namespace Nx.Kernel
         }
 
         #endregion UnregisterType<TType>
+
+#if !PORTABLE
+
+        #region AutoRegister
+
+        public static IKernel AutoRegister(this IKernel kernel, Assembly assembly)
+        {
+            kernel.Load(assembly);
+
+            kernel.Bind(scanner => scanner.FromAssembliesInPath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
+                                    .Select(IsServiceType)
+                                    .BindDefaultInterface()
+                                    .Configure(binding => binding.InSingletonScope()));
+
+            return kernel;
+        }
+
+        private static bool IsServiceType(Type type)
+        {
+            return type.IsClass && type.GetInterfaces().Any(intface => intface.Name == "I" + type.Name);
+        }
+
+        
+
+        #endregion AutoRegister
+
+#endif
 
         internal static ILogger GetLogger(this IKernel kernel, string loggerName)
         {
