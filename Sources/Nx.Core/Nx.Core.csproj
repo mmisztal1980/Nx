@@ -47,7 +47,8 @@
     <Compile Include="Extensions\NxServiceLocatorExtension.cs" />
     <Compile Include="Kernel\ComponentAttribute.cs" />
     <Compile Include="Kernel\ComponentLifestyle.cs" />
-    <Compile Include="Kernel\IKernelExtensions.cs" />
+    <Compile Include="Kernel\KernelExtensions.cs" />
+    <Compile Include="Kernel\ReflectionExtensions.cs" />
     <Compile Include="Logging\ILogFactory.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\LogFactory.cs">

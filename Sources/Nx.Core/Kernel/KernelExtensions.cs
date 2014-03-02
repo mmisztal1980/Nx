@@ -5,9 +5,10 @@ using System.Linq;
 
 namespace Nx.Kernel
 {
-    public static class IKernelExtensions
+    public static class KernelExtensions
     {
         #region IsRegistered
+
         public static bool IsRegistered<T>(this IKernel kernel)
         {
             return kernel.IsRegistered(typeof(T));
@@ -17,9 +18,11 @@ namespace Nx.Kernel
         {
             return kernel.GetBindings(type).Count() > 0;
         }
-        #endregion
+
+        #endregion IsRegistered
 
         #region RegisterInstance
+
         public static void RegisterInstance<T>(this IKernel kernel, T instance)
         {
             using (ILogger log = kernel.GetLogger("SYSTEM"))
@@ -38,9 +41,11 @@ namespace Nx.Kernel
                 kernel.Bind<TFrom>().ToConstant(instance);
             }
         }
-        #endregion
+
+        #endregion RegisterInstance
 
         #region RegisterTypeIfMissing<TType>
+
         public static void RegisterTypeIfMissing<TType>(this IKernel kernel, bool singleton)
         {
             kernel.RegisterTypeIfMissing(typeof(TType), singleton);
@@ -89,9 +94,10 @@ namespace Nx.Kernel
             }
         }
 
-        #endregion
+        #endregion RegisterTypeIfMissing<TType>
 
         #region RegisterTypeIfMissing<TFrom TTo>
+
         public static void RegisterTypeIfMissing<TFrom, TTo>(this IKernel kernel, bool singleton)
         {
             kernel.RegisterTypeIfMissing(typeof(TFrom), typeof(TTo), singleton);
@@ -139,9 +145,11 @@ namespace Nx.Kernel
                 log.Debug("Type registration : {0} -> {1} ({2}) [{3}]", from.Name, to.Name, singleton, key);
             }
         }
-        #endregion
+
+        #endregion RegisterTypeIfMissing<TFrom TTo>
 
         #region UnregisterType<TType>
+
         public static void UnregisterType<TType>(this IKernel kernel)
         {
             if (kernel.IsRegistered<TType>())
@@ -150,7 +158,13 @@ namespace Nx.Kernel
                 kernel.Unbind<TType>();
             }
         }
-        #endregion
+
+        #endregion UnregisterType<TType>
+
+        public static IKernel AutoRegisterTypesFromAssembly(this IKernel kernel)
+        {
+            kernel.Sc
+        }
 
         internal static ILogger GetLogger(this IKernel kernel, string loggerName)
         {
