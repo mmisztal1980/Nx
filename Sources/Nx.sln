@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1157A6B5-479E-432C-BF23-23262921F133}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".version", ".version", "{27060A29-73DE-44D9-9941-2096BAAB204F}"
+	ProjectSection(SolutionItems) = preProject
+		.version\AssemblyInfo.cs = .version\AssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Portable", "Portable", "{3050529C-B2A9-4C1A-B715-EFCFF069F399}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Core", "Nx.Core\Nx.Core.csproj", "{D9369AE1-F563-4B8F-A2E0-9D3FC77E48A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Domain", "Nx.Domain\Nx.Domain.csproj", "{3F65547F-9090-4C02-AF6D-F105B3C07CC7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{DDB4BCF2-1794-49EF-8543-DBE60B84FBCF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9369AE1-F563-4B8F-A2E0-9D3FC77E48A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9369AE1-F563-4B8F-A2E0-9D3FC77E48A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9369AE1-F563-4B8F-A2E0-9D3FC77E48A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9369AE1-F563-4B8F-A2E0-9D3FC77E48A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F65547F-9090-4C02-AF6D-F105B3C07CC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F65547F-9090-4C02-AF6D-F105B3C07CC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F65547F-9090-4C02-AF6D-F105B3C07CC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F65547F-9090-4C02-AF6D-F105B3C07CC7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D9369AE1-F563-4B8F-A2E0-9D3FC77E48A0} = {3050529C-B2A9-4C1A-B715-EFCFF069F399}
+		{3F65547F-9090-4C02-AF6D-F105B3C07CC7} = {DDB4BCF2-1794-49EF-8543-DBE60B84FBCF}
+	EndGlobalSection
+EndGlobal
