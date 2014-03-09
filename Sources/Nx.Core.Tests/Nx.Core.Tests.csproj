@@ -67,7 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrappers\Bootstrapper.cs" />
+    <Compile Include="Interception\DisposeInterceptionTestObject.cs" />
     <Compile Include="Interception\InterceptFooMethodInterceptor.cs" />
+    <Compile Include="Interception\WhenUsingExtendedDispose.cs" />
     <Compile Include="Interception\WhenUsingMethodInterceptors.cs" />
     <Compile Include="Interception\InterceptFooMethodAttribute.cs" />
     <Compile Include="Interception\FooMethodInterceptionTestObject.cs" />

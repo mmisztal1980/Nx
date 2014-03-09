@@ -22,7 +22,7 @@ namespace Nx.Extensions
             }
         }
 
-        internal static void CleanUpIEnumerable(this IEnumerable enumerable, MemberInfo memberInfo, IInvocation invocation, ILogger logger)
+        internal static void CleanUpIEnumerable(this IEnumerable enumerable, MemberInfo memberInfo, ref IInvocation invocation, ILogger logger)
         {
             foreach (var item in enumerable)
             {
@@ -41,7 +41,7 @@ namespace Nx.Extensions
             }
         }
 
-        internal static void CleanUpIDictionary(this IDictionary dictionary, MemberInfo memberInfo, IInvocation invocation, ILogger logger)
+        internal static void CleanUpIDictionary(this IDictionary dictionary, MemberInfo memberInfo, ref IInvocation invocation, ILogger logger)
         {
             foreach (var value in dictionary.Values)
             {

@@ -9,13 +9,13 @@ namespace Nx.Extensions
 {
     public static class ReflectionExtensions
     {
-        public static void DisposeFieldInfo(this FieldInfo fieldInfo, IInvocation invocation, ILogger logger)
+        public static void DisposeFieldInfo(this FieldInfo fieldInfo, ref IInvocation invocation, ILogger logger)
         {
             Console.WriteLine("Cleaning up {0}", fieldInfo.Name);
 
-            if (!fieldInfo.CleanUpIEnumerable(invocation, logger))
-                if (!fieldInfo.CleanUpIDictionary(invocation, logger))
-                    fieldInfo.CleanUpFieldInfo(invocation);
+            if (!fieldInfo.CleanUpIEnumerable(ref invocation, logger))
+                if (!fieldInfo.CleanUpIDictionary(ref invocation, logger))
+                    fieldInfo.CleanUpFieldInfo(ref invocation);
 
             if (fieldInfo.FieldType.IsClass || fieldInfo.FieldType.IsInterface)
             {
@@ -23,13 +23,13 @@ namespace Nx.Extensions
             }
         }
 
-        public static void DisposePropertyInfo(this PropertyInfo propertyInfo, IInvocation invocation, ILogger logger)
+        public static void DisposePropertyInfo(this PropertyInfo propertyInfo, ref IInvocation invocation, ILogger logger)
         {
             Console.WriteLine("Cleaning up {0}", propertyInfo.Name);
 
-            if (!propertyInfo.CleanUpIEnumerable(invocation, logger))
-                if (!propertyInfo.CleanUpIDictionary(invocation, logger))
-                    propertyInfo.CleanUpPropertyInfo(invocation);
+            if (!propertyInfo.CleanUpIEnumerable(ref invocation, logger))
+                if (!propertyInfo.CleanUpIDictionary(ref invocation, logger))
+                    propertyInfo.CleanUpPropertyInfo(ref invocation);
 
             if (propertyInfo.PropertyType.IsClass || propertyInfo.PropertyType.IsInterface)
             {
@@ -63,7 +63,7 @@ namespace Nx.Extensions
             return result;
         }
 
-        private static void CleanUpFieldInfo(this FieldInfo fieldInfo, IInvocation invocation)
+        private static void CleanUpFieldInfo(this FieldInfo fieldInfo, ref IInvocation invocation)
         {
             var obj = fieldInfo.GetValue(invocation.Request.Target) as IDisposable;
             if (obj != null)
@@ -72,58 +72,53 @@ namespace Nx.Extensions
             }
         }
 
-        private static bool CleanUpIDictionary(this FieldInfo fieldInfo, IInvocation invocation, ILogger logger)
+        private static bool CleanUpIDictionary(this FieldInfo fieldInfo, ref IInvocation invocation, ILogger logger)
         {
             var dictionary = fieldInfo.GetValue(invocation.Request.Target) as System.Collections.IDictionary;
             if (dictionary == null) return false;
 
-            dictionary.CleanUpIDictionary(fieldInfo, invocation, logger);
+            dictionary.CleanUpIDictionary(fieldInfo, ref invocation, logger);
 
             return true;
         }
 
-        private static bool CleanUpIDictionary(this PropertyInfo propertyInfo, IInvocation invocation, ILogger logger)
+        private static bool CleanUpIDictionary(this PropertyInfo propertyInfo, ref IInvocation invocation, ILogger logger)
         {
             var dictionary = propertyInfo.GetValue(invocation.Request.Target) as System.Collections.IDictionary;
             if (dictionary == null) return false;
 
-            dictionary.CleanUpIDictionary(propertyInfo, invocation, logger);
+            dictionary.CleanUpIDictionary(propertyInfo, ref invocation, logger);
 
             return true;
         }
 
-        private static bool CleanUpIEnumerable(this FieldInfo fieldInfo, IInvocation invocation, ILogger logger)
+        private static bool CleanUpIEnumerable(this FieldInfo fieldInfo, ref IInvocation invocation, ILogger logger)
         {
             var collection = fieldInfo.GetValue(invocation.Request.Target) as System.Collections.IEnumerable;
             if (collection == null) return false;
 
-            collection.CleanUpIEnumerable(fieldInfo, invocation, logger);
+            collection.CleanUpIEnumerable(fieldInfo, ref invocation, logger);
 
             return true;
         }
 
-        private static bool CleanUpIEnumerable(this PropertyInfo propertyInfo, IInvocation invocation, ILogger logger)
+        private static bool CleanUpIEnumerable(this PropertyInfo propertyInfo, ref IInvocation invocation, ILogger logger)
         {
             var collection = propertyInfo.GetValue(invocation.Request.Target) as System.Collections.IEnumerable;
             if (collection == null) return false;
 
-            collection.CleanUpIEnumerable(propertyInfo, invocation, logger);
+            collection.CleanUpIEnumerable(propertyInfo, ref invocation, logger);
 
             return true;
         }
 
-        private static void CleanUpPropertyInfo(this PropertyInfo propertyInfo, IInvocation invocation)
+        private static void CleanUpPropertyInfo(this PropertyInfo propertyInfo, ref IInvocation invocation)
         {
             Console.WriteLine("Cleaning up {0}", propertyInfo.Name);
             var obj = propertyInfo.GetValue(invocation.Request.Target) as IDisposable;
             if (obj != null)
             {
                 obj.Dispose();
-            }
-
-            if (propertyInfo.PropertyType.IsClass || propertyInfo.PropertyType.IsInterface)
-            {
-                propertyInfo.SetValue(invocation.Request.Target, null);
             }
         }
 

@@ -22,8 +22,8 @@ namespace Nx.Interception
         {
             var targetType = invocation.Request.Target.GetType();
 
-            targetType.GetFields<DisposeAttribute>().ForEach(fi => fi.DisposeFieldInfo(invocation, _logger));
-            targetType.GetProperties<DisposeAttribute>().ForEach(pi => pi.DisposePropertyInfo(invocation, _logger));
+            targetType.GetFields<DisposeAttribute>().ForEach(fi => fi.DisposeFieldInfo(ref invocation, _logger));
+            targetType.GetProperties<DisposeAttribute>().ForEach(pi => pi.DisposePropertyInfo(ref invocation, _logger));
         }
     }
 }
