@@ -219,7 +219,7 @@ assemblyinfo :assemblyinfo => :clean do |a|
   a.description = DESCRIPTION
   a.version = a.file_version = VERSION
   a.copyright = COPYRIGHT
-  a.output_file = "Kayak/Properties/AssemblyInfo.cs"
+  a.output_file = "Nx.Core/Properties/AssemblyInfo.cs"
   a.namespaces "System.Runtime.CompilerServices"
   a.custom_attributes :InternalsVisibleTo => "Kayak.Tests"
 end
@@ -227,15 +227,15 @@ end
 msbuild :build_msbuild do |b|
   b.properties :configuration => CONFIGURATION, "OutputPath" => OUTPUT_DIR
   b.targets :Build
-  b.solution = "Kayak.sln"
+  b.solution = "Nx.sln"
 end
 
 xbuild :build_xbuild do |b|
   b.properties :configuration => CONFIGURATION, "OutputPath" => OUTPUT_DIR
   b.targets :Build
-  b.solution = "Kayak.sln"
+  b.solution = "Nx.sln"
 end
-
+# => :assemblyinfo
 task :build => :assemblyinfo do
   ensure_submodules()
   ensure_nuget_packages()
@@ -245,7 +245,8 @@ end
 
 task :test => :build do
   nunit = invoke_runtime("packages/NUnit.2.5.10.11092/tools/nunit-console.exe")
-  sh "#{nunit} -labels #{OUTPUT_DIR}/Kayak.Tests.dll"
+  #sh "#{nunit} -labels #{OUTPUT_DIR}/Kayak.Tests.dll"
+  sh "#{nunit} -labels Nx.Core.Tests/bin/Release/Nx.Core.Tests.dll"
 end
 
 task :binaries => :build do
@@ -296,11 +297,11 @@ task :dist => [:test, :dist_nuget, :dist_zip] do
 end
 
 task :clean do
-  FileUtils.rm_rf BUILD_DIR
-  FileUtils.rm_rf "Kayak/bin"
-  FileUtils.rm_rf "Kayak/obj"
-  FileUtils.rm_rf "Kayak.Tests/bin"
-  FileUtils.rm_rf "Kayak.Tests/obj"
+#  FileUtils.rm_rf BUILD_DIR
+#  FileUtils.rm_rf "Kayak/bin"
+#  FileUtils.rm_rf "Kayak/obj"
+#  FileUtils.rm_rf "Kayak.Tests/bin"
+#  FileUtils.rm_rf "Kayak.Tests/obj"
 end
 
 task :dist_clean => [:clean] do
