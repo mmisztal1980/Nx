@@ -2,13 +2,13 @@
 using Ninject.Modules;
 using Nx.Bootstrappers;
 
-namespace Nx.Core.Tests
+namespace Nx.Core.Tests.Bootstrappers
 {
     public class Bootstrapper : BootstrapperBase
     {
         public Bootstrapper(params INinjectModule[] modules)
             : base(modules)
-        {            
+        {
         }
 
         protected override IKernel CreateContainer()
@@ -18,7 +18,6 @@ namespace Nx.Core.Tests
 
         protected override void ConfigureContainer()
         {
-
         }
     }
 }

@@ -4,7 +4,7 @@ using Nx.Bootstrappers;
 using Nx.Kernel;
 using Nx.Logging;
 
-namespace Nx.Core.Tests
+namespace Nx.Core.Tests.Bootstrappers
 {
     public class WhenUsingTheBootstrapper
     {
@@ -27,7 +27,7 @@ namespace Nx.Core.Tests
             using (IKernel kernel = bootstrapper.Run())
             {
                 Assert.IsTrue(kernel.IsRegistered<ILogger>());
-            }            
+            }
         }
     }
 }

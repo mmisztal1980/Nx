@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Nx.Bootstrappers;
 using Nx.Kernel;
 
-namespace Nx.Core.Tests
+namespace Nx.Core.Tests.Bootstrappers
 {
     [TestFixture]
     public class WhenUsingBootstrapperExtensions
@@ -30,7 +30,6 @@ namespace Nx.Core.Tests
 
         private class TestExtension : IBootstrapperExtension
         {
-
             public void Extend(IKernel kernel)
             {
                 kernel.RegisterTypeIfMissing<TestType>(false);

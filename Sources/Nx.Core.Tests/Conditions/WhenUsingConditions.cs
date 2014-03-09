@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 
-namespace Nx.Core.Tests
+namespace Nx.Core.Tests.Conditions
 {
     [TestFixture]
     public class WhenUsingConditions

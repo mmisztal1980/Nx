@@ -1,16 +1,15 @@
 ﻿using Ninject;
 using NUnit.Framework;
 using Nx.Bootstrappers;
+using Nx.Core.Tests.Bootstrappers;
 using Nx.Kernel;
 using Nx.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Nx.Core.Tests
+namespace Nx.Core.Tests.Logging
 {
+    [TestFixture]
     public class WhenUsingTheLogFactory
     {
         [Test]

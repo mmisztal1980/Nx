@@ -1,9 +1,10 @@
-﻿using NUnit.Framework;
-using Ninject.Modules;
+﻿using Ninject.Modules;
+using NUnit.Framework;
+using Nx.Core.Tests.Bootstrappers;
 using Nx.Modules;
 using System;
 
-namespace Nx.Core.Tests
+namespace Nx.Core.Tests.Modules
 {
     [TestFixture]
     public class WhenUsingModules
@@ -35,7 +36,7 @@ namespace Nx.Core.Tests
             var modules = new INinjectModule[3]
                 {
                     new TestModule(),
-                    new TestModule(), 
+                    new TestModule(),
                     new TestModule()
                 };
 
@@ -52,12 +53,12 @@ namespace Nx.Core.Tests
 
         private class TestModule : Module
         {
-            private bool _isLoaded = false;
-            public bool IsLoaded
+            public TestModule()
             {
-                get { return _isLoaded; }
-                private set { _isLoaded = value; }
+                IsLoaded = false;
             }
+
+            public bool IsLoaded { get; private set; }
 
             public override string Name
             {
@@ -66,7 +67,6 @@ namespace Nx.Core.Tests
 
             public override void OnDisposing()
             {
-                
             }
 
             public override void OnLoading()
