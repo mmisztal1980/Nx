@@ -65,14 +65,6 @@
     <Compile Include="Condition.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\ReflectionExtensions.cs" />
-    <Compile Include="Interception\DisposeAttribute.cs" />
-    <Compile Include="Interception\ExtendedDisposeAttribute.cs" />
-    <Compile Include="Interception\ExtendedDisposeInterceptor.cs" />
-    <Compile Include="Interception\InterceptorAttribute.cs" />
-    <Compile Include="Interception\MeasureExecutionTimeAttribute.cs" />
-    <Compile Include="Interception\MeasureExecutionTimeInterceptor.cs" />
-    <Compile Include="Interception\MethodInterceptor.cs" />
-    <Compile Include="Interception\MethodInterceptorAttribute.cs" />
     <Compile Include="Kernel\KernelExtensions.cs" />
     <Compile Include="Kernel\NxKernel.cs" />
     <Compile Include="Logging\ILogFactory.cs" />
