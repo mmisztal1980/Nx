@@ -1,6 +1,4 @@
-﻿using Ninject;
-using NUnit.Framework;
-using Nx.Bootstrappers;
+﻿using NUnit.Framework;
 using Nx.Kernel;
 using Nx.Logging;
 
@@ -13,8 +11,8 @@ namespace Nx.Core.Tests.Bootstrappers
         {
             Assert.DoesNotThrow(() =>
             {
-                using (BootstrapperBase bootstrapper = new Bootstrapper())
-                using (IKernel kernel = bootstrapper.Run())
+                using (var bootstrapper = new Bootstrapper())
+                using (var kernel = bootstrapper.Run())
                 {
                 }
             });
@@ -23,8 +21,8 @@ namespace Nx.Core.Tests.Bootstrappers
         [Test]
         public void TheILoggerTypeShouldBeRegistered()
         {
-            using (BootstrapperBase bootstrapper = new Bootstrapper())
-            using (IKernel kernel = bootstrapper.Run())
+            using (var bootstrapper = new Bootstrapper())
+            using (var kernel = bootstrapper.Run())
             {
                 Assert.IsTrue(kernel.IsRegistered<ILogger>());
             }

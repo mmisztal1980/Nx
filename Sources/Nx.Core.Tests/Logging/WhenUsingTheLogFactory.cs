@@ -1,6 +1,5 @@
 ﻿using Ninject;
 using NUnit.Framework;
-using Nx.Bootstrappers;
 using Nx.Core.Tests.Bootstrappers;
 using Nx.Kernel;
 using Nx.Logging;
@@ -15,8 +14,8 @@ namespace Nx.Core.Tests.Logging
         [Test]
         public void ShouldCreateALogger()
         {
-            using (BootstrapperBase bootstrapper = new Bootstrapper())
-            using (IKernel kernel = bootstrapper.Run())
+            using (var bootstrapper = new Bootstrapper())
+            using (var kernel = bootstrapper.Run())
             {
                 Assert.IsTrue(kernel.IsRegistered<ILogger>());
             }
@@ -26,10 +25,10 @@ namespace Nx.Core.Tests.Logging
         [RequiresMTA]
         public void ShouldCreateLoggersThreadSafe()
         {
-            using (BootstrapperBase bootstrapper = new Bootstrapper())
-            using (IKernel kernel = bootstrapper.Run())
+            using (var bootstrapper = new Bootstrapper())
+            using (var kernel = bootstrapper.Run())
             {
-                Task[] tasks = new Task[100];
+                var tasks = new Task[100];
                 for (int i = 0; i < tasks.Length; i++)
                 {
                     tasks[i] = new Task(X, kernel.Get<ILogFactory>());
