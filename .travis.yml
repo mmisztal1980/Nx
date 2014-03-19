@@ -1,0 +1,4 @@
+language: ruby
+rvm:
+	- "1.9.3"
+script: sh -c 'cd Sources && bundle exec rake integration_tests'

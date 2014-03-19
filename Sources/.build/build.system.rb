@@ -14,6 +14,7 @@ require 'net/https'
 require 'rake'
 
 require 'build.tools.rb'
+require 'build.nuget.rb'
 
 unless defined? _BUILD_SYSTEM_
 	_BUILD_SYSTEM_ = true
@@ -44,5 +45,5 @@ unless defined? _BUILD_SYSTEM_
    			:COPYRIGHT 				      => "Copyright (C) 2014 Maciej Misztal",
   	} unless defined? CONFIG
 
-  	PACKAGES = {} unless defined? PACKAGES
+  PACKAGES = {} unless defined? PACKAGES
 end

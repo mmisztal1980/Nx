@@ -104,6 +104,7 @@ task :clean , [:build_config, :build_platform, :build_version] => :configure do 
     f.exclude(/packages/)
   end
 
+  puts "Cleaning solution :"
   files.each { |dir|
     puts dir
     FileUtils.rm_rf(dir) 
