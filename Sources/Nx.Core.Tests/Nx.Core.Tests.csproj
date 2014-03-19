@@ -75,6 +75,7 @@
     <Compile Include="Logging\WhenUsingTheLogFactory.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".rake" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

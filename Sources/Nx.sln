@@ -10,11 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1157A6
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".version", ".version", "{27060A29-73DE-44D9-9941-2096BAAB204F}"
-	ProjectSection(SolutionItems) = preProject
-		.version\AssemblyInfo.cs = .version\AssemblyInfo.cs
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core Framework", "Core Framework", "{3050529C-B2A9-4C1A-B715-EFCFF069F399}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Domain", "Nx.Domain\Nx.Domain.csproj", "{3F65547F-9090-4C02-AF6D-F105B3C07CC7}"
@@ -43,6 +38,20 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{1AA6B3CE-D8CE-4BF0-A48A-A3277874B7C0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Logging", "Nx.Logging\Nx.Logging.csproj", "{E6F05303-2713-4109-AE21-94C0FAE615DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Core.Package", "Nx.Core.Package\Nx.Core.Package.csproj", "{1E4888ED-2017-427D-AE66-9534ED45E147}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Logging.Package", "Nx.Logging.Package\Nx.Logging.Package.csproj", "{4C8AC6FE-C775-41EC-AAA4-E63F7DA9819D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portable.Nx.Core.Package", "Portable.Nx.Core.Package\Portable.Nx.Core.Package.csproj", "{B83DBF93-842F-4408-8A71-344C5AA0474B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{7B51AA64-1288-4E1A-A948-A551179B0E05}"
+	ProjectSection(SolutionItems) = preProject
+		.build\build.system.rb = .build\build.system.rb
+		.build\build.tools.rb = .build\build.tools.rb
+		.build\nunit.rb = .build\nunit.rb
+		.build\runtimeInvoker.rb = .build\runtimeInvoker.rb
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,6 +87,18 @@ Global
 		{E6F05303-2713-4109-AE21-94C0FAE615DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6F05303-2713-4109-AE21-94C0FAE615DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6F05303-2713-4109-AE21-94C0FAE615DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E4888ED-2017-427D-AE66-9534ED45E147}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E4888ED-2017-427D-AE66-9534ED45E147}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E4888ED-2017-427D-AE66-9534ED45E147}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E4888ED-2017-427D-AE66-9534ED45E147}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C8AC6FE-C775-41EC-AAA4-E63F7DA9819D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C8AC6FE-C775-41EC-AAA4-E63F7DA9819D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C8AC6FE-C775-41EC-AAA4-E63F7DA9819D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C8AC6FE-C775-41EC-AAA4-E63F7DA9819D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B83DBF93-842F-4408-8A71-344C5AA0474B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B83DBF93-842F-4408-8A71-344C5AA0474B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B83DBF93-842F-4408-8A71-344C5AA0474B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B83DBF93-842F-4408-8A71-344C5AA0474B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,5 +114,8 @@ Global
 		{6E46E81A-09D5-42BA-84E3-2352DD399330} = {DDB4BCF2-1794-49EF-8543-DBE60B84FBCF}
 		{5A0F33E9-4915-4FE0-9BCE-80F873C47FEF} = {BAD76903-9CF0-4BA4-B059-4C0B0C5BFA82}
 		{1DEA19E0-788E-4EFA-98D4-7D0E625375F6} = {6E46E81A-09D5-42BA-84E3-2352DD399330}
+		{1E4888ED-2017-427D-AE66-9534ED45E147} = {1AA6B3CE-D8CE-4BF0-A48A-A3277874B7C0}
+		{4C8AC6FE-C775-41EC-AAA4-E63F7DA9819D} = {1AA6B3CE-D8CE-4BF0-A48A-A3277874B7C0}
+		{B83DBF93-842F-4408-8A71-344C5AA0474B} = {1AA6B3CE-D8CE-4BF0-A48A-A3277874B7C0}
 	EndGlobalSection
 EndGlobal

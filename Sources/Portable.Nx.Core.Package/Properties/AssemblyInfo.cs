@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Nx.Logging")]
+[assembly: AssemblyTitle("Portable.Nx.Core.Package")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Nx.Logging")]
+[assembly: AssemblyProduct("Portable.Nx.Core.Package")]
 [assembly: AssemblyCopyright("Copyright (C) 2014 Maciej Misztal")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e5539959-8d59-44f9-8e85-459f0d6d2531")]
+[assembly: Guid("51e49df2-df99-4009-a585-65d4f933ee1e")]
 
 // Version information for an assembly consists of the following four values:
 //

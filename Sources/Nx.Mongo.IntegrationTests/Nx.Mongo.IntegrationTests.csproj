@@ -79,6 +79,7 @@
     <Compile Include="WhenUsingTheMongoRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".rake" />
     <None Include="App.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
