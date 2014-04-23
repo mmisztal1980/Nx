@@ -9,8 +9,7 @@ namespace :nx_core_tests do
 			"#{projectDir}/bin/#{args.build_config}/Nx.Core.Tests.dll"
 		]
 
-		nunit = BuildSystem::NUnit.new(args.nunit_path, test_assemblies)
-		nunit.run
+		BuildSystem::NUnit.run(args.nunit_path, test_assemblies)
 	end
 
 	# Validates the build_config and nunit_path parameters sent to the .rake file

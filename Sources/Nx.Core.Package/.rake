@@ -1,7 +1,7 @@
 PROJECTDIR = "#{File.dirname(__FILE__)}"
 
-require "#{PROJECTDIR}/../build.nuget.rb"
-require "#{PROJECTDIR}/../build.tools.rb"
+require 'build.system.rb'
+require 'nuget.rb'
 
 files = {	
 	"#{PROJECTDIR}/../Nx.Core/bin/Release/Nx.Core.dll" => "#{PROJECTDIR}/lib",
@@ -12,9 +12,9 @@ namespace :nx_core_package do
 	task :init => :clean do
 		puts "init called"
 
-		ensure_dir_exists("#{PROJECTDIR}/lib")
-		ensure_dir_exists("#{PROJECTDIR}/tools")
-		ensure_dir_exists("#{PROJECTDIR}/src")
+		#ensure_dir_exists("#{PROJECTDIR}/lib")
+		#ensure_dir_exists("#{PROJECTDIR}/tools")
+		#ensure_dir_exists("#{PROJECTDIR}/src")
 	end
 
 	# Cleans all target directories before copying files
@@ -25,10 +25,10 @@ namespace :nx_core_package do
 		}
 	end
 
-	task :package => [:init, :clean]do
+	task :pack => [:init, :clean]do
 		create_nuget_package("#{PROJECTDIR}/Package.nuspec", "#{PROJECTDIR}")
 	end
 
-	task :deploy do
+	task :deploy => do
 	end
 end
