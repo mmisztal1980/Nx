@@ -93,11 +93,11 @@
       <DependentUpon>Bootstrapper.feature</DependentUpon>
     </Compile>
     <Compile Include="Bootstrappers\BootstrapperSteps.cs" />
+    <Compile Include="Bootstrappers\TestExtension.cs" />
+    <Compile Include="Bootstrappers\TestType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Bootstrappers\WhenUsingBootstrapperExtensions.cs" />
     <Compile Include="Conditions\WhenUsingConditions.cs" />
     <Compile Include="Modules\WhenUsingModules.cs" />
-    <Compile Include="Bootstrappers\WhenUsingTheBootstrapper.cs" />
     <Compile Include="Logging\WhenUsingTheLogFactory.cs" />
     <Compile Include="SpecFlowNUnitExtension.cs" />
   </ItemGroup>
