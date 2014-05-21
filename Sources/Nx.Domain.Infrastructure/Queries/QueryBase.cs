@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Nx.Domain.Queries
+namespace Nx.Domain.Infrastructure.Queries
 {
     public abstract class QueryBase<T>
     {

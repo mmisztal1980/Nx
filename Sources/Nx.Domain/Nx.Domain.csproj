@@ -50,14 +50,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Command.cs">
+      <DependentUpon>ICommand.cs</DependentUpon>
+    </Compile>
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandHandler.cs" />
     <Compile Include="Events\IDomainEvent.cs" />
-    <Compile Include="Events\IDomainEventListener.cs" />
     <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Nx.Core\Nx.Core.csproj">
+      <Project>{7cf46fb7-2396-4c6e-a74f-13d61173ea41}</Project>
+      <Name>Nx.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

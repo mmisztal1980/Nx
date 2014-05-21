@@ -129,6 +129,6 @@ end # clean
 
 # Ensures all packages are present, regardless of the platform
 task :ensure_nuget_packages do
-  puts "Ensuring all NuGet packages are present"j
+  puts "Ensuring all NuGet packages are present"
   BuildSystem::NuGet.ensure_nuget_packages()
 end # ensure_nuget_packages

@@ -1,7 +1,7 @@
-﻿using Nx.Domain.Queries;
+﻿using Nx.Domain.Infrastructure.Queries;
 using System.Linq;
 
-namespace Nx.Domain
+namespace Nx.Domain.Infrastructure.Repositories
 {
     public interface ISession
     {
