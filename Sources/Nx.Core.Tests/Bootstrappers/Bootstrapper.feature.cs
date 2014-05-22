@@ -86,42 +86,46 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Fluently extend the bootstrapper")]
-        public virtual void FluentlyExtendTheBootstrapper()
+        [NUnit.Framework.DescriptionAttribute("Extend the bootstrapper with an object instance")]
+        [NUnit.Framework.CategoryAttribute("Bootstrapper_extension_object_instance")]
+        public virtual void ExtendTheBootstrapperWithAnObjectInstance()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Fluently extend the bootstrapper", ((string[])(null)));
-#line 10
-this.ScenarioSetup(scenarioInfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Extend the bootstrapper with an object instance", new string[] {
+                        "Bootstrapper_extension_object_instance"});
 #line 11
- testRunner.Given("I have created the Bootstrapper", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 12
- testRunner.Given("I extend the Bootstrapper fluently", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have created the Bootstrapper", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 13
- testRunner.When("I have run the Bootstrapper", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("I extend the Bootstrapper with an object instance", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 14
- testRunner.Then("the kernel shall not be null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("I have run the Bootstrapper", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
+ testRunner.Then("the kernel shall not be null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 16
  testRunner.And("the TestType shall be registered", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Generically extend the bootstrapper")]
-        public virtual void GenericallyExtendTheBootstrapper()
+        [NUnit.Framework.DescriptionAttribute("Extend the bootstrapper with a generic type")]
+        [NUnit.Framework.CategoryAttribute("Bootstrapper_extension_generic_typea")]
+        public virtual void ExtendTheBootstrapperWithAGenericType()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Generically extend the bootstrapper", ((string[])(null)));
-#line 17
-this.ScenarioSetup(scenarioInfo);
-#line 18
- testRunner.Given("I have created the Bootstrapper", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Extend the bootstrapper with a generic type", new string[] {
+                        "Bootstrapper_extension_generic_typea"});
 #line 19
- testRunner.Given("I extend the Bootstrapper generically", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 20
- testRunner.When("I have run the Bootstrapper", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("I have created the Bootstrapper", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 21
- testRunner.Then("the kernel shall not be null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Given("I extend the Bootstrapper with a generic type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 22
+ testRunner.When("I have run the Bootstrapper", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 23
+ testRunner.Then("the kernel shall not be null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 24
  testRunner.And("the TestType shall be registered", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

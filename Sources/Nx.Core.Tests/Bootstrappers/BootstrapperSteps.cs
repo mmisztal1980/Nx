@@ -38,7 +38,7 @@ namespace Nx.Core.Tests.Bootstrappers
             Assert.IsTrue(_kernel.IsRegistered<ILogger>());
         }
 
-        [Given(@"I extend the Bootstrapper fluently")]
+        [Given(@"I extend the Bootstrapper with an object instance")]
         public void WhenIExtendTheBootstrapperFluently()
         {
             _bootstrapper.ExtendBy(new TestExtension());
@@ -50,7 +50,7 @@ namespace Nx.Core.Tests.Bootstrappers
             Assert.IsTrue(_kernel.IsRegistered<TestType>());
         }
 
-        [Given(@"I extend the Bootstrapper generically")]
+        [Given(@"I extend the Bootstrapper with a generic type")]
         public void WhenIExtendTheBootstrapperGenerically()
         {
             _bootstrapper.ExtendBy<TestExtension>();

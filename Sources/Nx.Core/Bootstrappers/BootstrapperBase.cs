@@ -8,7 +8,7 @@ using System;
 namespace Nx.Bootstrappers
 {
     /// <summary>
-    /// The Bootstrapper. Executes the initialization sequence for the application. 
+    /// The Bootstrapper. Executes the initialization sequence for the application.
     /// </summary>
     public abstract class BootstrapperBase : IHaveKernel, IBootstrapper, IDisposable
     {
@@ -40,6 +40,7 @@ namespace Nx.Bootstrappers
         }
 
         #region IDisposable Members
+
         ~BootstrapperBase()
         {
             Dispose(false);
@@ -62,7 +63,8 @@ namespace Nx.Bootstrappers
         public virtual void OnDisposing()
         {
         }
-        #endregion
+
+        #endregion IDisposable Members
 
         public IKernel Run()
         {
@@ -120,7 +122,7 @@ namespace Nx.Bootstrappers
         /// <summary>
         /// Ensures the IKernel is registered. Ensures the ServiceLocator is initialized
         /// </summary>
-        protected virtual void PreConfigureContainer()
+        private void PreConfigureContainer()
         {
             if (!Kernel.IsRegistered<IKernel>())
             {
