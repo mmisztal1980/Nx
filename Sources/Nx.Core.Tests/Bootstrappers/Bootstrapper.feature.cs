@@ -87,17 +87,21 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Extend the bootstrapper with an object instance")]
-        [NUnit.Framework.CategoryAttribute("Bootstrapper_extension_object_instance")]
+        [NUnit.Framework.CategoryAttribute("Bootstrapper")]
+        [NUnit.Framework.CategoryAttribute("Bootstrapper_extension")]
+        [NUnit.Framework.CategoryAttribute("Object_instance")]
         public virtual void ExtendTheBootstrapperWithAnObjectInstance()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Extend the bootstrapper with an object instance", new string[] {
-                        "Bootstrapper_extension_object_instance"});
+                        "Bootstrapper",
+                        "Bootstrapper_extension",
+                        "Object_instance"});
 #line 11
 this.ScenarioSetup(scenarioInfo);
 #line 12
  testRunner.Given("I have created the Bootstrapper", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 13
- testRunner.Given("I extend the Bootstrapper with an object instance", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.And("I extend the Bootstrapper with an object instance", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 14
  testRunner.When("I have run the Bootstrapper", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
@@ -110,17 +114,21 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Extend the bootstrapper with a generic type")]
-        [NUnit.Framework.CategoryAttribute("Bootstrapper_extension_generic_typea")]
+        [NUnit.Framework.CategoryAttribute("Bootstrapper")]
+        [NUnit.Framework.CategoryAttribute("Bootstrapper_extension")]
+        [NUnit.Framework.CategoryAttribute("Generic_type")]
         public virtual void ExtendTheBootstrapperWithAGenericType()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Extend the bootstrapper with a generic type", new string[] {
-                        "Bootstrapper_extension_generic_typea"});
+                        "Bootstrapper",
+                        "Bootstrapper_extension",
+                        "Generic_type"});
 #line 19
 this.ScenarioSetup(scenarioInfo);
 #line 20
  testRunner.Given("I have created the Bootstrapper", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 21
- testRunner.Given("I extend the Bootstrapper with a generic type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.And("I extend the Bootstrapper with a generic type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 22
  testRunner.When("I have run the Bootstrapper", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 23
