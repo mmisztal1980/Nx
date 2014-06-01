@@ -10,57 +10,75 @@ namespace Nx.Core.Tests.Bootstrappers
     [Binding]
     public class BootstrapperSteps
     {
-        private BootstrapperBase _bootstrapper;
-        private IKernel _kernel;
-
         [Given(@"I have created the Bootstrapper")]
         public void GivenIHaveCreatedTheBootstrapper()
         {
-            _bootstrapper = new Bootstrapper();
+            ScenarioContext.Current[BootstrapperTests.BootstrapperKey] = new Bootstrapper();
         }
 
         [When(@"I have run the Bootstrapper")]
         public void WhenIHaveRunTheBootstrapper()
         {
-            Assert.IsNotNull(_bootstrapper);
-            _kernel = _bootstrapper.Run();
-        }
-
-        [Then(@"the kernel shall not be null")]
-        public void ThenTheKernelShallNotBeNull()
-        {
-            Assert.IsNotNull(_kernel);
+            var bootstrapper = ScenarioContext.Current[BootstrapperTests.BootstrapperKey] as BootstrapperBase;
+            Assert.IsNotNull(bootstrapper);
+            ScenarioContext.Current[BootstrapperTests.KernelKey] = bootstrapper.Run();
         }
 
         [Then(@"the ILogger shall be registered")]
         public void ThenTheILoggerShallBeRegistered()
         {
-            Assert.IsTrue(_kernel.IsRegistered<ILogger>());
+            var kernel = ScenarioContext.Current[BootstrapperTests.KernelKey] as IKernel;
+            Assert.IsNotNull(kernel);
+            Assert.IsTrue(kernel.IsRegistered<ILogger>());
+        }
+
+        [Then("the kernel shall not be null")]
+        public void ThenTheKernelShallNotBeNull()
+        {
+            var kernel = ScenarioContext.Current[BootstrapperTests.KernelKey] as IKernel;
+            Assert.IsNotNull(kernel);
         }
 
         [Given(@"I extend the Bootstrapper with an object instance")]
         public void WhenIExtendTheBootstrapperFluently()
         {
-            _bootstrapper.ExtendBy(new TestExtension());
+            var bootstrapper = ScenarioContext.Current[BootstrapperTests.BootstrapperKey] as BootstrapperBase;
+            Assert.IsNotNull(bootstrapper);
+            bootstrapper.ExtendBy(new TestExtension());
         }
 
         [Then(@"the TestType shall be registered")]
         public void ThenTheTestTypeShallBeRegistered()
         {
-            Assert.IsTrue(_kernel.IsRegistered<TestType>());
+            var kernel = ScenarioContext.Current[BootstrapperTests.KernelKey] as IKernel;
+            Assert.IsNotNull(kernel);
+            Assert.IsTrue(kernel.IsRegistered<TestType>());
         }
 
         [Given(@"I extend the Bootstrapper with a generic type")]
         public void WhenIExtendTheBootstrapperGenerically()
         {
-            _bootstrapper.ExtendBy<TestExtension>();
+            var bootstrapper = ScenarioContext.Current[BootstrapperTests.BootstrapperKey] as BootstrapperBase;
+            Assert.IsNotNull(bootstrapper);
+            bootstrapper.ExtendBy<TestExtension>();
         }
 
         [AfterScenario()]
         public void CleanUp()
         {
-            if (_bootstrapper != null) _bootstrapper.Dispose();
-            if (_kernel != null) _kernel.Dispose();
+            var bootstrapper = ScenarioContext.Current[BootstrapperTests.BootstrapperKey] as BootstrapperBase;
+            if (bootstrapper != null)
+            {
+                bootstrapper.Dispose();
+                ScenarioContext.Current.Remove(BootstrapperTests.BootstrapperKey);
+            }
+
+            var kernel = ScenarioContext.Current[BootstrapperTests.KernelKey] as IKernel;
+            if (kernel != null)
+            {
+                kernel.Dispose();
+                ScenarioContext.Current.Remove(BootstrapperTests.KernelKey);
+            }
         }
     }
 }
