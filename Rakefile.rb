@@ -18,11 +18,12 @@ include BuildSystem
 solution_file = "Nx.sln"
 
 unit_tests = {
-  :nx_core_tests => "#{CONFIG[:SOLUTIONDIR]}/Nx.Core.Tests/.rake"
+  :nx_core_unit_tests => "#{CONFIG[:SOLUTIONDIR]}/Tests/Nx.Core.UnitTests/.rake"
 }
 
 integration_tests = {
-  :nx_mongo_integration_tests => "#{CONFIG[:SOLUTIONDIR]}/Nx.Mongo.IntegrationTests/.rake"
+  :nx_core_integration_tests => "#{CONFIG[:SOLUTIONDIR]}/Tests/Nx.Core.IntegrationTests/.rake"
+  #:nx_mongo_integration_tests => "#{CONFIG[:SOLUTIONDIR]}/Nx.Mongo.IntegrationTests/.rake"
 }
 
 packages = {

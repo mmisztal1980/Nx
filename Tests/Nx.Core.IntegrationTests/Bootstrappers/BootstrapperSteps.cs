@@ -4,6 +4,8 @@ using Nx.Bootstrappers;
 using Nx.Core.Tests.Bootstrappers;
 using Nx.Kernel;
 using Nx.Logging;
+using Nx.Modules;
+using System.Collections.Generic;
 using TechTalk.SpecFlow;
 
 namespace Nx.Core.IntegrationTests.Bootstrappers
@@ -79,6 +81,22 @@ namespace Nx.Core.IntegrationTests.Bootstrappers
             {
                 kernel.Dispose();
                 ScenarioContext.Current.Remove(BootstrapperTests.KernelKey);
+            }
+
+            if (ScenarioContext.Current.ContainsKey(BootstrapperTests.ModulesKey))
+            {
+                var modules = ScenarioContext.Current[BootstrapperTests.ModulesKey] as List<Module>;
+                if (modules != null)
+                {
+                    foreach (var module in modules)
+                    {
+                        module.Dispose();
+                    }
+
+                    modules.Clear();
+
+                    ScenarioContext.Current.Remove(BootstrapperTests.ModulesKey);
+                }
             }
         }
     }
