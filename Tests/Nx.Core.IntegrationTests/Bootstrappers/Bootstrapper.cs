@@ -2,7 +2,7 @@
 using Ninject.Modules;
 using Nx.Bootstrappers;
 
-namespace Nx.Core.Tests.Bootstrappers
+namespace Nx.Core.IntegrationTests.Bootstrappers
 {
     public class Bootstrapper : BootstrapperBase
     {

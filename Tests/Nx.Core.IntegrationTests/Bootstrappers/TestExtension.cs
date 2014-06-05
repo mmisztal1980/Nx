@@ -1,8 +1,9 @@
 ﻿using Ninject;
 using Nx.Bootstrappers;
+using Nx.Core.Tests.Bootstrappers;
 using Nx.Kernel;
 
-namespace Nx.Core.Tests.Bootstrappers
+namespace Nx.Core.IntegrationTests.Bootstrappers
 {
     internal sealed class TestExtension : IBootstrapperExtension
     {
