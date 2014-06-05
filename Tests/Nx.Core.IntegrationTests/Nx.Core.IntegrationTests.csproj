@@ -87,6 +87,7 @@
     <Compile Include="SpecFlowNUnitExtension.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".rake" />
     <None Include="App.config" />
     <None Include="Bootstrappers\Bootstrapper.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
