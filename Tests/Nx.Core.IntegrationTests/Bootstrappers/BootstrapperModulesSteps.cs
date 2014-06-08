@@ -24,6 +24,7 @@ namespace Nx.Core.IntegrationTests.Bootstrappers
             for (int i = 0; i < p0; i++)
             {
                 modules.Add((Module)Activator.CreateInstance(Type.GetType(p1)));
+                Console.WriteLine("Added module {0}/{1} {2}", i, p0, modules.Last().GetHashCode());
             }
 
             ScenarioContext.Current[BootstrapperTests.ModulesKey] = modules;
@@ -56,10 +57,38 @@ namespace Nx.Core.IntegrationTests.Bootstrappers
         [Then(@"the number of modules present should be (.*)")]
         public void TheNumberOfModulesPresentShouldBe(int p0)
         {
+            Console.WriteLine("Expected number of modules : {0}", p0);
             var kernel = ScenarioContext.Current[BootstrapperTests.KernelKey] as IKernel;
             Assert.IsNotNull(kernel);
             var modules = kernel.GetModules();
-            Assert.AreEqual(modules.Count(), p0);
+
+            foreach (var module in modules)
+            {
+                Console.WriteLine("Module found : {0}, {1}", module.GetHashCode(), module.GetType().ToString());
+            }
+
+            Assert.AreEqual(p0, modules.Count());
+        }
+
+        [AfterScenario]
+        public void CleanUp()
+        {
+            if (ScenarioContext.Current.ContainsKey(BootstrapperTests.ModulesKey))
+            {
+                var modules = ScenarioContext.Current[BootstrapperTests.ModulesKey] as List<Module>;
+                if (modules != null)
+                {
+                    foreach (var module in modules)
+                    {
+                        Console.WriteLine("Disposing module {0}", module.GetHashCode());
+                        module.Dispose();
+                    }
+
+                    modules.Clear();
+
+                    ScenarioContext.Current.Remove(BootstrapperTests.ModulesKey);
+                }
+            }
         }
     }
 }
