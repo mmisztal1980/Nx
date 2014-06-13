@@ -2,6 +2,8 @@
 using MassTransit.Reactive;
 using Nx.Extensions;
 using System;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 
 namespace Nx.Domain.Commands
 {
@@ -9,13 +11,13 @@ namespace Nx.Domain.Commands
     /// The ReactiveCommandHandler subscribes to the MassTransit IService bus, listens to incoming commands and handles them.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class CommandHandler<T> : Disposable, ICommandHandler<T>
+    public abstract class ReactiveCommandHandler<T> : Disposable, ICommandHandler<T>
         where T : class, ICommand, CorrelatedBy<Guid>
     {
         protected readonly IServiceBus ServiceBus;
         private readonly IDisposable _subscription;
 
-        protected CommandHandler(Uri uri)
+        protected ReactiveCommandHandler(Uri uri)
         {
             ServiceBus = ServiceBusFactory.New(bus =>
             {
@@ -23,10 +25,12 @@ namespace Nx.Domain.Commands
                 bus.UseRabbitMq();
             });
 
-            _subscription = ServiceBus.AsObservable<T>().Subscribe(
-                HandleCommand,
-                HandleException,
-                HandleCompletion);
+            _subscription = ServiceBus.AsObservable<T>()
+                .ObserveOn(NewThreadScheduler.Default)
+                .Subscribe(
+                    HandleCommand,
+                    HandleException,
+                    HandleCompletion);
         }
 
         public abstract void HandleCommand(T command);

@@ -25,7 +25,7 @@ namespace Nx.Domain.Commands
         /// <param name="id"></param>
         protected Command(Guid id)
         {
-            Condition.Require<InvalidOperationException>(id.Equals(Guid.Empty), "You cannot use an empty GUID for a command Id");
+            Condition.Require<InvalidOperationException>(!id.Equals(Guid.Empty), "You cannot use an empty GUID for a command Id");
             Id = id;
         }
 
