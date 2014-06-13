@@ -1,6 +1,8 @@
-﻿namespace Nx.Domain.Commands
+﻿using System;
+
+namespace Nx.Domain.Commands
 {
-    public interface ICommandHandler<in T>
+    public interface ICommandHandler<in T> : IDisposable
         where T : class, ICommand
     {
         /// <summary>

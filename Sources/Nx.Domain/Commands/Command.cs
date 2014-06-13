@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MassTransit;
+using System;
 
 namespace Nx.Domain.Commands
 {
@@ -8,7 +9,7 @@ namespace Nx.Domain.Commands
     /// Serializable
     /// </summary>
     [Serializable]
-    public abstract class Command : ICommand
+    public abstract class Command : ICommand, CorrelatedBy<Guid>
     {
         /// <summary>
         /// Creates a new Command instance and sets the Id value to a new Guid.
@@ -32,5 +33,13 @@ namespace Nx.Domain.Commands
         /// The Command's Id
         /// </summary>
         public Guid Id { get; private set; }
+
+        /// <summary>
+        /// The Command's CorrelationId for the ServiceBus
+        /// </summary>
+        public Guid CorrelationId
+        {
+            get { return Id; }
+        }
     }
 }

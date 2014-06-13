@@ -41,6 +41,9 @@
     <Reference Include="MassTransit.Reactive">
       <HintPath>..\..\packages\MassTransit.Reactive.2.9.5\lib\net40\MassTransit.Reactive.dll</HintPath>
     </Reference>
+    <Reference Include="MassTransit.Transports.RabbitMq">
+      <HintPath>..\..\packages\MassTransit.RabbitMQ.2.9.5\lib\net40\MassTransit.Transports.RabbitMq.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -48,7 +51,11 @@
       <HintPath>..\..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\..\packages\RabbitMQ.Client.3.2.1\lib\net30\RabbitMQ.Client.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reactive.Core">
       <HintPath>..\..\packages\Rx-Core.2.2.4\lib\net45\System.Reactive.Core.dll</HintPath>
@@ -76,9 +83,13 @@
     <Compile Include="Commands\Command.cs">
       <DependentUpon>ICommand.cs</DependentUpon>
     </Compile>
-    <Compile Include="Commands\CommandHandler.cs" />
+    <Compile Include="Commands\CommandHandlerBehaviorAttribute.cs" />
+    <Compile Include="Commands\ReactiveCommandHandler.cs">
+      <DependentUpon>ICommandHandler.cs</DependentUpon>
+    </Compile>
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandHandler.cs" />
+    <Compile Include="Configuration\ServiceBusConfigurationSection.cs" />
     <Compile Include="Events\IDomainEvent.cs" />
     <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

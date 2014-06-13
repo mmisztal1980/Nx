@@ -55,7 +55,10 @@
     <Compile Include="Bootstrappers\IBootstrapperExtension.cs" />
     <Compile Include="Bootstrappers\IModuleLoadingStrategy.cs" />
     <Compile Include="Condition.cs" />
+    <Compile Include="Disposable.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\FluentExtensions.cs" />
+    <Compile Include="Extensions\RedirectToWhen.cs" />
     <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="Kernel\KernelExtensions.cs" />
     <Compile Include="Kernel\NxKernel.cs" />
