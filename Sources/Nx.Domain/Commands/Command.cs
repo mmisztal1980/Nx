@@ -1,4 +1,4 @@
-﻿using MassTransit;
+﻿using Nx.Domain.ServiceBus;
 using System;
 
 namespace Nx.Domain.Commands
@@ -9,7 +9,7 @@ namespace Nx.Domain.Commands
     /// Serializable
     /// </summary>
     [Serializable]
-    public abstract class Command : ICommand, CorrelatedBy<Guid>
+    public abstract class Command : ServiceBusMessage, ICommand
     {
         /// <summary>
         /// Creates a new Command instance and sets the Id value to a new Guid.
@@ -24,22 +24,10 @@ namespace Nx.Domain.Commands
         /// </summary>
         /// <param name="id"></param>
         protected Command(Guid id)
+            : base(id)
         {
             Condition.Require<InvalidOperationException>(!id.Equals(Guid.Empty), "You cannot use an empty GUID for a command Id");
             Id = id;
-        }
-
-        /// <summary>
-        /// The Command's Id
-        /// </summary>
-        public Guid Id { get; private set; }
-
-        /// <summary>
-        /// The Command's CorrelationId for the ServiceBus
-        /// </summary>
-        public Guid CorrelationId
-        {
-            get { return Id; }
         }
     }
 }

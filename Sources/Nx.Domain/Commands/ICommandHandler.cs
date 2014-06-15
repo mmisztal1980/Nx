@@ -10,5 +10,7 @@ namespace Nx.Domain.Commands
         /// </summary>
         /// <param name="command">The command to handle</param>
         void HandleCommand(T command);
+
+        Guid ReceiverId { get; }
     }
 }

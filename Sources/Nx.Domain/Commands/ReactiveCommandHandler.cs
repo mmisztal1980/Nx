@@ -18,24 +18,39 @@ namespace Nx.Domain.Commands
         private readonly IDisposable _subscription;
 
         protected ReactiveCommandHandler(Uri uri)
+            : this(uri, Guid.NewGuid())
         {
-            ServiceBus = ServiceBusFactory.New(bus =>
-            {
-                bus.ReceiveFrom(uri);
-                bus.UseRabbitMq();
-            });
+        }
+
+        protected ReactiveCommandHandler(Uri uri, Guid receiverId)
+        {
+            ReceiverId = receiverId;
+
+            ServiceBus = ConfigureServiceBus(uri);
 
             _subscription = ServiceBus.AsObservable<T>()
                 .ObserveOn(NewThreadScheduler.Default)
+                .Where(cmd => cmd.ReceiverId.Equals(Guid.Empty) || cmd.ReceiverId.Equals(ReceiverId))
                 .Subscribe(
                     HandleCommand,
                     HandleException,
                     HandleCompletion);
         }
 
-        public abstract void HandleCommand(T command);
+        protected virtual IServiceBus ConfigureServiceBus(Uri uri)
+        {
+            return ServiceBusFactory.New(bus =>
+            {
+                bus.ReceiveFrom(uri);
+                bus.UseRabbitMq();
+            });
+        }
 
         public abstract string Key { get; }
+
+        public Guid ReceiverId { get; private set; }
+
+        public abstract void HandleCommand(T command);
 
         protected override void Dispose(bool disposing)
         {
@@ -51,6 +66,7 @@ namespace Nx.Domain.Commands
 
         private void HandleException<TException>(TException ex)
             where TException : Exception
-        { }
+        {
+        }
     }
 }

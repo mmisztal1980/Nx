@@ -22,7 +22,8 @@ unit_tests = {
 }
 
 integration_tests = {
-  :nx_core_integration_tests => "#{CONFIG[:SOLUTIONDIR]}/Tests/Nx.Core.IntegrationTests/.rake"
+  :nx_core_integration_tests => "#{CONFIG[:SOLUTIONDIR]}/Tests/Nx.Core.IntegrationTests/.rake",
+  :nx_domain_integration_tests => "#{CONFIG[:SOLUTIONDIR]}/Tests/Nx.Domain.IntegrationTests/.rake"
   #:nx_mongo_integration_tests => "#{CONFIG[:SOLUTIONDIR]}/Nx.Mongo.IntegrationTests/.rake"
 }
 

@@ -92,7 +92,12 @@
     <Compile Include="Configuration\ServiceBusConfigurationSection.cs" />
     <Compile Include="Events\IDomainEvent.cs" />
     <Compile Include="Exceptions\DomainException.cs" />
+    <Compile Include="ServiceBus\IServiceBusExtensions.cs" />
+    <Compile Include="ServiceBus\IServiceBusMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceBus\ServiceBusMessage.cs">
+      <DependentUpon>IServiceBusMessage.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Nx.Core\Nx.Core.csproj">
