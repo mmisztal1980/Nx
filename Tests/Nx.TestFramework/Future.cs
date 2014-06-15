@@ -70,7 +70,7 @@ namespace Nx
 
         public bool WaitUntilCompleted(TimeSpan timeout)
         {
-            return _event.WaitOne(timeout);
+            return IsCompleted || _event.WaitOne(timeout);
         }
 
         public bool WaitUntilCompleted(int timeout)
