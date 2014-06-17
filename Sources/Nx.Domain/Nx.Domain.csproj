@@ -90,11 +90,16 @@
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandHandler.cs" />
     <Compile Include="Configuration\ServiceBusConfigurationSection.cs" />
+    <Compile Include="Events\ReactiveDomainEventHandler.cs">
+      <DependentUpon>IDomainEventHandler.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\IDomainEvent.cs" />
+    <Compile Include="Events\IDomainEventHandler.cs" />
     <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="ServiceBus\IServiceBusExtensions.cs" />
     <Compile Include="ServiceBus\IServiceBusMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceBus\IServiceBusReceiver.cs" />
     <Compile Include="ServiceBus\ServiceBusMessage.cs">
       <DependentUpon>IServiceBusMessage.cs</DependentUpon>
     </Compile>

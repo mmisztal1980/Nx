@@ -1,6 +1,15 @@
-﻿namespace Nx.Domain.Events
+﻿using Nx.Domain.ServiceBus;
+using System;
+
+namespace Nx.Domain.Events
 {
-    public interface IDomainEventHandler<TEvent> where TEvent : class, IDomainEvent
+    /// <summary>
+    ///
+    /// </summary>
+    /// <typeparam name="TEvent"></typeparam>
+    public interface IDomainEventHandler<TEvent> : IServiceBusReceiver, IDisposable
+        where TEvent : class, IDomainEvent
     {
+        void HandleEvent(TEvent ev);
     }
 }

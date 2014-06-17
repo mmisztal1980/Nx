@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Nx.Domain.ServiceBus;
+using System;
 
 namespace Nx.Domain.Commands
 {
-    public interface ICommandHandler<in T> : IDisposable
+    public interface ICommandHandler<in T> : IServiceBusReceiver, IDisposable
         where T : class, ICommand
     {
         /// <summary>
@@ -10,7 +11,5 @@ namespace Nx.Domain.Commands
         /// </summary>
         /// <param name="command">The command to handle</param>
         void HandleCommand(T command);
-
-        Guid ReceiverId { get; }
     }
 }

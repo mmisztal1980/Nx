@@ -37,6 +37,12 @@ namespace Nx.Domain.Commands
                     HandleCompletion);
         }
 
+        public abstract string Key { get; }
+
+        public Guid ReceiverId { get; private set; }
+
+        public abstract void HandleCommand(T command);
+
         protected virtual IServiceBus ConfigureServiceBus(Uri uri)
         {
             return ServiceBusFactory.New(bus =>
@@ -45,12 +51,6 @@ namespace Nx.Domain.Commands
                 bus.UseRabbitMq();
             });
         }
-
-        public abstract string Key { get; }
-
-        public Guid ReceiverId { get; private set; }
-
-        public abstract void HandleCommand(T command);
 
         protected override void Dispose(bool disposing)
         {

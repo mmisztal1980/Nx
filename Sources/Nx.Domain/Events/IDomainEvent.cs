@@ -1,6 +1,8 @@
-﻿namespace Nx.Domain.Events
+﻿using Nx.Domain.ServiceBus;
+
+namespace Nx.Domain.Events
 {
-    public interface IDomainEvent
+    public interface IDomainEvent : IServiceBusMessage
     {
     }
 }

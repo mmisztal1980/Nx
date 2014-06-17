@@ -11,6 +11,9 @@ namespace Nx.Domain.ServiceBus
         /// </summary>
         Guid Id { get; }
 
+        /// <summary>
+        /// The Id of the intended receiver.
+        /// </summary>
         Guid ReceiverId { get; set; }
     }
 }
