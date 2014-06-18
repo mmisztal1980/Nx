@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using NCrunch.Framework;
 using NUnit.Framework;
-using Nx.Domain.ServiceBus;
+using Nx.ServiceBus;
 using System;
 
 namespace Nx.Domain.IntegrationTests.Commands

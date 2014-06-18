@@ -1,7 +1,7 @@
-﻿using Nx.Domain.ServiceBus;
+﻿using Nx.ServiceBus;
 using System;
 
-namespace Nx.Domain.Commands
+namespace Nx.Commands
 {
     public interface ICommandHandler<in T> : IServiceBusReceiver, IDisposable
         where T : class, ICommand

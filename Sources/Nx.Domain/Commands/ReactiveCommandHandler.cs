@@ -5,7 +5,7 @@ using System;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 
-namespace Nx.Domain.Commands
+namespace Nx.Commands
 {
     /// <summary>
     /// The ReactiveCommandHandler subscribes to the MassTransit IService bus, listens to incoming commands and handles them.

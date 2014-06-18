@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nx.Domain.Commands
+namespace Nx.Commands
 {
     /// <summary>
     /// The enum used to describe the command handler's behavior

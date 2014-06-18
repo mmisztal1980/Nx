@@ -1,7 +1,7 @@
-﻿using Nx.Domain.ServiceBus;
+﻿using Nx.ServiceBus;
 using System;
 
-namespace Nx.Domain.Commands
+namespace Nx.Commands
 {
     /// <summary>
     /// An abstract Command DTO, implementing ICommand.

@@ -1,4 +1,4 @@
-﻿namespace Nx.Domain.Configuration
+﻿namespace Nx.Configuration
 {
     public class ServiceBusConfigurationSection
     {

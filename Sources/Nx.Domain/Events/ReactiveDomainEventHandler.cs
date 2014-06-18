@@ -4,7 +4,7 @@ using System;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 
-namespace Nx.Domain.Events
+namespace Nx.Events
 {
     public abstract class DomainEventHandler<TEvent> : Disposable, IDomainEventHandler<TEvent>
         where TEvent : class, IDomainEvent

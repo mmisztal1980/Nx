@@ -7,7 +7,7 @@
     <ProjectGuid>{3F65547F-9090-4C02-AF6D-F105B3C07CC7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nx.Domain</RootNamespace>
+    <RootNamespace>Nx</RootNamespace>
     <AssemblyName>Nx.Domain</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -96,6 +96,9 @@
     <Compile Include="Events\IDomainEvent.cs" />
     <Compile Include="Events\IDomainEventHandler.cs" />
     <Compile Include="Exceptions\DomainException.cs" />
+    <Compile Include="IAggregate.cs" />
+    <Compile Include="Queries\IQuery.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="ServiceBus\IServiceBusExtensions.cs" />
     <Compile Include="ServiceBus\IServiceBusMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,6 +106,7 @@
     <Compile Include="ServiceBus\ServiceBusMessage.cs">
       <DependentUpon>IServiceBusMessage.cs</DependentUpon>
     </Compile>
+    <Compile Include="IEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Nx.Core\Nx.Core.csproj">

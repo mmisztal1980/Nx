@@ -1,13 +1,13 @@
-﻿using Nx.Domain.ServiceBus;
+﻿using Nx.ServiceBus;
 using System;
 
-namespace Nx.Domain.Events
+namespace Nx.Events
 {
     /// <summary>
     ///
     /// </summary>
     /// <typeparam name="TEvent"></typeparam>
-    public interface IDomainEventHandler<TEvent> : IServiceBusReceiver, IDisposable
+    public interface IDomainEventHandler<in TEvent> : IServiceBusReceiver, IDisposable
         where TEvent : class, IDomainEvent
     {
         void HandleEvent(TEvent ev);

@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using System;
 
-namespace Nx.Domain.ServiceBus
+namespace Nx.ServiceBus
 {
     public interface IServiceBusMessage : CorrelatedBy<Guid>
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nx.Domain.ServiceBus
+namespace Nx.ServiceBus
 {
     /// <summary>
     /// ServiceBusMessage is the most base type of messages passed by the ServiceBus

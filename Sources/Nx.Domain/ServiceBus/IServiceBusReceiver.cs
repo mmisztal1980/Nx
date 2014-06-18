@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nx.Domain.ServiceBus
+namespace Nx.ServiceBus
 {
     public interface IServiceBusReceiver
     {

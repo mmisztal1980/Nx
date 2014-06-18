@@ -1,6 +1,7 @@
-﻿using Nx.Domain.ServiceBus;
+﻿using Nx.ServiceBus;
+using System;
 
-namespace Nx.Domain.Commands
+namespace Nx.Commands
 {
     /// <summary>
     /// The basic ICommand containing the ICommand's GUID Id
@@ -9,8 +10,10 @@ namespace Nx.Domain.Commands
     {
     }
 
-    public interface ICommand<in T> : ICommand
-        where T : class
+    public interface ICommand<TEntity, out TId> : ICommand
+        where TEntity : class, IEntity<TId>
+        where TId : IEquatable<TId>
     {
+        TId EntityId { get; }
     }
 }

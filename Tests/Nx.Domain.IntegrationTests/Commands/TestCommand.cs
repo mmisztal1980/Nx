@@ -1,5 +1,5 @@
+using Nx.Commands;
 using System;
-using Nx.Domain.Commands;
 
 namespace Nx.Domain.IntegrationTests.Commands
 {

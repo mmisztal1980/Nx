@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nx.Domain.Exceptions
+namespace Nx.Exceptions
 {
     public class DomainException : Exception
     {

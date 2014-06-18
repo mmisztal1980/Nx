@@ -1,5 +1,5 @@
 using MassTransit;
-using Nx.Domain.Commands;
+using Nx.Commands;
 using System;
 using System.Threading;
 
