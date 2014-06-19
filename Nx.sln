@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.TestFramework", "Tests\N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.NHibernate", "Nx.NHibernate\Nx.NHibernate.csproj", "{A389B6C0-BEA2-4715-8CBB-2910B8D5F7EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Core.Package", "Packaging\Nx.Core.Package\Nx.Core.Package.csproj", "{8B07357F-757A-45D1-A450-3F1B1F247B32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{A389B6C0-BEA2-4715-8CBB-2910B8D5F7EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A389B6C0-BEA2-4715-8CBB-2910B8D5F7EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A389B6C0-BEA2-4715-8CBB-2910B8D5F7EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B07357F-757A-45D1-A450-3F1B1F247B32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B07357F-757A-45D1-A450-3F1B1F247B32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B07357F-757A-45D1-A450-3F1B1F247B32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B07357F-757A-45D1-A450-3F1B1F247B32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

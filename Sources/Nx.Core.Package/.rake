@@ -8,7 +8,7 @@ files = {
 	"#{PROJECTDIR}/../Nx.Core/bin/Release/Nx.Core.pdb" => "#{PROJECTDIR}/lib",
 }
 
-namespace :nx_core_package do
+namespace :nx_core_package doD:\Checkout\Nx\Tests\Nx.Domain.IntegrationTests\.rake
 	task :init => :clean do
 		puts "init called"
 
