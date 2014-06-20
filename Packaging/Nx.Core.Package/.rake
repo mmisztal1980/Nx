@@ -3,6 +3,9 @@ require 'build.system.rb'
 require 'nunit.rb'
 
 namespace :nx_core_package do
+	binaries = {
+  		"#{CONFIG[:SOLUTION_DIR]}/Nx.Core/bin/#{build_config}/Nx.Core.dll" => "#{projectDir}/lib",
+	}
 	# Executes a set of tests
 	task :run, [:build_config, :nuget_path] => :copy_binaries do |t, args|
 		#test_assemblies = [
